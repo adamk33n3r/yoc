@@ -85,7 +85,7 @@ exports.show = function(req, res) {
 
 // Creates a new event in the DB
 exports.create = function(req, res) {
-  User.findOneAsync({ facebook: { id: req.body.creator } })
+  User.findOneAsync({ 'facebook.id': req.body.creator })
     .then(handleEntityNotFound(res))
     .then(function(user) {
       req.body.creator = user._id;
@@ -119,7 +119,7 @@ exports.join = function(req, res) {
   var flag = JSON.parse(req.body.flag);
   var evnt = Event.findByIdAsync(req.params.id)
     .then(handleEntityNotFound(res));
-  var user = User.findOneAsync({ facebook: { id: req.body.uid } })
+  var user = User.findOneAsync({ 'facebook.id': req.body.uid })
     .then(handleEntityNotFound(res));
   Promise.all([evnt, user])
     .then(function(values) {

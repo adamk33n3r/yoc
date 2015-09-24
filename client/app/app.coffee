@@ -23,19 +23,31 @@ angular.module 'yocApp', [
   $locationProvider.html5Mode true
   $httpProvider.interceptors.push 'authInterceptor'
 
-.controller 'MainController', ($rootScope, $facebook) ->
+.controller 'MainController', ($rootScope, $facebook, User) ->
   console.log "Booting app..."
   $rootScope.facebookLoaded = false
   $rootScope.user_id = "0000000000"
   $rootScope.message = "This is a test notification from @[10207313578220466]"
 
-  onLogin = (response) ->
+  onLogin = (response, firstTime = false) ->
     if response.status is 'connected'
-      $facebook.api '/me?fields=first_name,last_name,name,email'
+      $facebook.api '/me?fields=name,email'
       .then (data) ->
         $rootScope.user_id = data.id
         console.log "User id is #{data.id}"
         $rootScope.facebookLoaded = true
+        if firstTime
+          console.log "Creating new user"
+          newUser = new User
+            name:
+              full: data.name
+            email: data.email
+            facebook: data
+          newUser.$save()
+            .catch (err) ->
+              alert "Failed to create user. Contact admin."
+    else
+      alert "You must login with Facebook in order to use this app."
 
   $facebook.getLoginStatus().then (response) ->
     # Check login status on load, and if the user is
@@ -46,7 +58,7 @@ angular.module 'yocApp', [
       # Otherwise, show Login dialog first.
       $facebook.login()
       .then (response) ->
-        onLogin response
+        onLogin response, true
 
   $rootScope.$on 'fb.auth.authResponseChange', (event, response, FB) ->
     $rootScope.status = $facebook.isConnected()

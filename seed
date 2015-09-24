@@ -24,9 +24,6 @@ rl.question("This will reset the database. Are you sure you want to do this? [y/
         console.log("Seeding db...");
         try {
             var promise = require("./server/config/seed");
-            console.log("fsd");
-            console.log(promise);
-            console.log(promise.then);
             promise.then(function() {
                 console.log("Completed");
                 mongoose.disconnect();

@@ -30,6 +30,11 @@ UserSchema
   .virtual('name.full')
   .get(function() {
     return this.name.first + ' ' + this.name.last;
+  })
+  .set(function(val) {
+    var split = val.split(' ');
+    this.name.first = split[0];
+    this.name.last = split[1];
   });
 
 // Non-sensitive info we'll be putting in the token

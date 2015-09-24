@@ -7,6 +7,7 @@
 
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
+var Event = require('../api/event/event.model');
 
 var thingPromise = Thing.find({}).removeAsync()
   .then(function() {
@@ -55,35 +56,37 @@ var userPromise = User.find({}).removeAsync()
         last: 'User'
       },
       email: 'admin@admin.com',
-    }, {
-      name: {
-        first: 'Adam',
-        last: 'Keenan'
-      },
-      facebook: {
-        id: '10207313578220466'
-      }
-    }, {
-      name: {
-        first: 'Josh',
-        last: 'Felker'
-      },
-      facebook: {
-        id: '1181315412'
-      }
-    }, {
-      name: {
-        first: 'Geff',
-        last: 'Chapel'
-      },
-      facebook: {
-        id: '10155954256795305'
-      }
+//    }, {
+//      name: {
+//        first: 'Adam',
+//        last: 'Keenan'
+//      },
+//      facebook: {
+//        id: '10207313578220466'
+//      }
+//    }, {
+//      name: {
+//        first: 'Josh',
+//        last: 'Felker'
+//      },
+//      facebook: {
+//        id: '1181315412'
+//      }
+//    }, {
+//      name: {
+//        first: 'Geff',
+//        last: 'Chapel'
+//      },
+//      facebook: {
+//        id: '10155954256795305'
+//      }
     })
     .then(function() {
       console.log('finished populating users');
     });
   });
 
+var eventPromise = Event.find({}).removeAsync();
+
 var Promise = require('promise');
-module.exports = Promise.all([thingPromise, userPromise]);
+module.exports = Promise.all([thingPromise, userPromise, eventPromise]);
