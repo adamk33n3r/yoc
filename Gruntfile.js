@@ -1,4 +1,4 @@
-// Generated on 2015-08-12 using generator-angular-fullstack 2.0.13
+// Generated on 2015-08-15 using generator-angular-fullstack 2.0.13
 'use strict';
 
 module.exports = function (grunt) {
@@ -122,7 +122,11 @@ module.exports = function (grunt) {
           '<%= yeoman.client %>/assets/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}'
         ],
         options: {
-          livereload: true
+          livereload: {
+            port: 35729,
+            key: grunt.file.read('/etc/nginx/ssl/server.key'),
+            cert: grunt.file.read('/etc/nginx/ssl/server.crt')
+          }
         }
       },
       express: {

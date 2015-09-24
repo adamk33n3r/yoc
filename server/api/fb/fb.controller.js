@@ -28,51 +28,38 @@ function responseWithResult(res, statusCode) {
   };
 }
 
+exports.send_notification_raw = function(uid, message, callback) {
+  var client_id = "1643391279210026";
+  var client_secret = "5516ce513d02afe814c7214659259a94";
+  var url = "https://graph.facebook.com/v2.4/" + uid + "/notifications";
 
-// Gets a list of fbs
-exports.index = function(req, res) {
-};
+  var data = {
+    "access_token": client_id + '|' + client_secret,
+    "href": "",
+    "template": message && message.slice(0, 180) || 'This is a test notification'
+  };
 
-// Gets a single fb from the DB
-exports.show = function(req, res) {
-};
+  request.post(url, { form: data }, callback);
+}
 
-// Creates a new fb in the DB
-exports.create = function(req, res) {
-    var uid = req.body.user_id;
-    console.log(uid);
-    console.log(req);
-
-    var client_id = "1643391279210026";
-    var client_secret = "5516ce513d02afe814c7214659259a94";
-    var url = "https://graph.facebook.com/v2.4/" + uid + "/notifications";
-
-    var data = {
-        "access_token": client_id + '|' + client_secret,
-        "href": "fb",
-        "template": "this is test notif"
-    };
-
-    request.post(url, { form: data }, function(err, httpResponse, body) {
-        if (err) {
-            console.error('fb request error:', err);
-            return handleError(res);
-        }
-        body = JSON.parse(body);
-        console.log('fb responded with:', body);
-        if (body.error) {
-            res.json({ success: false });
-        } else {
-            res.json({ success: true });
-        }
-    });
-
-};
-
-// Updates an existing fb in the DB
-exports.update = function(req, res) {
-};
-
-// Deletes a fb from the DB
-exports.destroy = function(req, res) {
+// Sends a notification
+exports.send_notification = function(req, res) {
+  var uid = req.body.user_id;
+  var message = req.body.message;
+  exports.send_notification_raw(uid, message, function(err, httpResponse, body) {
+    if (err) {
+        console.error('fb request error:', err);
+        return handleError(res);
+    }
+    body = JSON.parse(body);
+    // console.log('fb responded with:', body);
+    res.status(201).json(body);
+  });
+  if (uid === '00000000000000000') {
+    if (message) {
+      res.status(201).json({success: true});
+    } else {
+      res.status(404).json({success: false});
+    }
+  }
 };

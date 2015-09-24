@@ -1,0 +1,6 @@
+.container
+  h1 Events
+  tabset(justified="true")
+    tab(ui-sref="event.list", heading="Current", active="listActive")
+    tab(ui-sref="event.create", heading="Create", active="createActive")
+  div(ui-view="")

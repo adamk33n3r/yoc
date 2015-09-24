@@ -1,0 +1,45 @@
+#!/usr/bin/env node
+var glob = require('glob');
+var readline = require('readline');
+var repl = require('repl').start({
+    prompt: "shell> "
+});
+var models = [];
+
+var mongoose = require('mongoose-bird')();
+var config = require('./server/config/environment/development');
+mongoose.connect(config.mongo.uri, { db: { safe: true } });
+repl.context['mongoose'] = mongoose;
+repl.context['Schema'] = mongoose.Schema;
+
+repl.on('exit', function() {
+    mongoose.disconnect();
+});
+
+// Go down a line after prompt for cleanliness
+console.log();
+
+// Change to root dir so we can run from anywhere
+console.log("Changing to root dir: " + __dirname);
+process.chdir(__dirname);
+
+// Search for all model files
+glob("./server/api/**/*.model.js", { nosort: true }, function(err, files) {
+    // Build list of files with names
+    files.forEach(function(file) {
+        var file_name = file.substr(file.lastIndexOf('/') + 1);
+        var name = file_name.substr(0, file_name.indexOf('.'));
+        name = name.charAt(0).toUpperCase() + name.substr(1);
+        models.push([name, file]);
+    });
+
+    // Now import them into the namespace
+    models.forEach(function(model) {
+        console.log("Importing " + model[0] + " from " + model[1]);
+        repl.context[model[0]] = require(model[1]);
+    });
+
+    // Rewrite out prompt
+    process.stdout.write('shell> ');
+
+});

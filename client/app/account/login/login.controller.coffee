@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'yocApp'
-.controller 'LoginCtrl', ($scope, Auth, $state, $window) ->
+.controller 'LoginCtrl', ($scope, Auth, $state) ->
   $scope.user = {}
   $scope.errors = {}
   $scope.login = (form) ->
@@ -19,5 +19,3 @@ angular.module 'yocApp'
       .catch (err) ->
         $scope.errors.other = err.message
 
-  $scope.loginOauth = (provider) ->
-    $window.location.href = '/auth/' + provider

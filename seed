@@ -1,0 +1,43 @@
+#!/usr/bin/env node
+
+process.chdir(__dirname);
+var mongoose = require('mongoose-bird')();
+var config = require('./server/config/environment/development');
+mongoose.connect(config.mongo.uri, {db: { safe: true }});
+// var User = require('./server/api/user/user.model');
+// User.find({}).exec(function(err, users) {
+//     console.log(users);
+// });
+
+var readline = require('readline');
+var rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+rl.question("This will reset the database. Are you sure you want to do this? [y/N] ", function(answer) {
+    if (answer === "" || answer === "n" || answer === "N") {
+        console.log("Quitting...");
+        mongoose.disconnect();
+        rl.close();
+    } else {
+        console.log("Seeding db...");
+        try {
+            var promise = require("./server/config/seed");
+            console.log("fsd");
+            console.log(promise);
+            console.log(promise.then);
+            promise.then(function() {
+                console.log("Completed");
+                mongoose.disconnect();
+                rl.close();
+            });
+        } catch (ex) {
+            console.log("ERROR: " + ex.message);
+            if (ex.code === "MODULE_NOT_FOUND")
+                console.log("Make sure you run grunt build before trying to seed");
+            mongoose.disconnect();
+            rl.close();
+        }
+    }
+});

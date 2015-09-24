@@ -7,12 +7,14 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <base href="/">
-    <title></title>
+    <title>Ye Olde Chums Portal</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(client) app/vendor.css -->
       <!-- bower:css -->
+      <link rel="stylesheet" href="bower_components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css" />
+      <link rel="stylesheet" href="bower_components/ui-select/dist/select.css" />
       <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css({.tmp,client}) app/app.css -->
@@ -29,8 +31,6 @@
     <!-- Add your site or application content here -->
     <navbar></navbar>
     <div ui-view=""></div>
-    <h1 id="fb-welcome"></h1>
-    <button id='cn', style="display: none", ng-click="sendNotif(user_id)">Create Notification</button>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
     <script>
@@ -51,21 +51,25 @@
       <!-- bower:js -->
       <script src="bower_components/jquery/dist/jquery.js"></script>
       <script src="bower_components/angular/angular.js"></script>
-      <script src="bower_components/angular-resource/angular-resource.js"></script>
-      <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-      <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
       <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-      <script src="bower_components/lodash/dist/lodash.compat.js"></script>
+      <script src="bower_components/moment/moment.js"></script>
+      <script src="bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>
+      <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+      <script src="bower_components/angular-moment/angular-moment.js"></script>
+      <script src="bower_components/angular-resource/angular-resource.js"></script>
+      <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
       <script src="bower_components/angular-socket-io/socket.js"></script>
       <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+      <script src="bower_components/lodash/dist/lodash.compat.js"></script>
       <script src="bower_components/ng-facebook/ngFacebook.js"></script>
+      <script src="bower_components/ui-select/dist/select.js"></script>
       <!-- endbower -->
       <script src="socket.io-client/socket.io.js"></script>
     <!-- endbuild -->
 
-        
+
         <!-- build:js({.tmp,client}) app/app.js -->
-        
+
         <script src="app/app.js"></script>
           <!-- injector:js -->
           <script src="app/account/account.js"></script>
@@ -74,6 +78,10 @@
           <script src="app/account/signup/signup.js"></script>
           <script src="app/admin/admin.js"></script>
           <script src="app/main/main.js"></script>
+          <script src="app/routes/event/event.js"></script>
+          <script src="app/services/Event/Event.js"></script>
+          <script src="app/services/Facebook/Facebook.js"></script>
+          <script src="app/services/Game/Game.js"></script>
           <script src="components/auth/auth.js"></script>
           <script src="components/auth/user.js"></script>
           <script src="components/footer/footer.js"></script>

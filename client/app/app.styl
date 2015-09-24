@@ -37,11 +37,70 @@
   margin 0.2em 0
   padding 0.2em 0
 
+
+
+
+
+.ui-select-container.no-height
+  .form-control
+    height: initial
+
+
+
+
+
+
+
+$brand-primary = darken(#428bca, 6.5%) // #337ab7
+$brand-success = #5cb85c
+$brand-info    = #5bc0de
+$brand-warning = #f0ad4e
+$brand-danger  = #d9534f
+
+.btn
+  transition: background 0.2s
+
+.list-group-hover
+  > .list-group-item
+    transition: all 0.2s
+  > .list-group-item:hover
+    background-color: #f5f5f5
+.list-group
+  > button.list-group-item.btn
+    text-align: center
+    border-bottom-left-radius: 3px
+    border-bottom-right-radius: 3px
+    &.btn-primary
+      color: #fff
+      background: $brand-primary
+      width: 100%
+      &:hover
+        background-color: #286090
+    &.btn-danger
+      color: #fff
+      background: $brand-danger
+      width: 100%
+      &:hover
+        background-color: #d2322d
+        background-color: darken($brand-danger, 13.5%)
+
+.nav-tabs > li > a
+  cursor: pointer
+
+
+
+
+
+
+
+
+
 // Component styles are injected through grunt
 // injector
 @import 'account/login/login.styl';
 @import 'admin/admin.styl';
 @import 'main/main.styl';
+@import 'routes/event/event.styl';
 @import 'footer/footer.styl';
 @import 'modal/modal.styl';
 // endinjector

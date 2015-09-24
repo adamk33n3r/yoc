@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'yocApp'
-.controller 'SignupCtrl', ($scope, Auth, $state, $window) ->
+.controller 'SignupCtrl', ($scope, Auth, $state) ->
   $scope.user = {}
   $scope.errors = {}
   $scope.register = (form) ->
@@ -26,5 +26,3 @@ angular.module 'yocApp'
           form[field].$setValidity 'mongoose', false
           $scope.errors[field] = error.message
 
-  $scope.loginOauth = (provider) ->
-    $window.location.href = '/auth/' + provider

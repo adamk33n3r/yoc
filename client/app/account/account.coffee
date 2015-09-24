@@ -3,23 +3,23 @@
 angular.module 'yocApp'
 .config ($stateProvider) ->
   $stateProvider
-  .state 'login',
-    url: '/login'
-    templateUrl: 'app/account/login/login.html'
-    controller: 'LoginCtrl'
+  # .state 'login',
+  #   url: '/login'
+  #   templateUrl: 'app/account/login/login.html'
+  #   controller: 'LoginCtrl'
 
-  .state 'logout',
-    url: '/logout?referrer'
-    referrer: 'main'
-    controller: ($state, Auth) ->
-      referrer = $state.params.referrer or $state.current.referrer or "main"
-      Auth.logout()
-      $state.go referrer
+  # .state 'logout',
+  #   url: '/logout?referrer'
+  #   referrer: 'main'
+  #   controller: ($state, Auth) ->
+  #     referrer = $state.params.referrer or $state.current.referrer or "main"
+  #     Auth.logout()
+  #     $state.go referrer
 
-  .state 'signup',
-    url: '/signup'
-    templateUrl: 'app/account/signup/signup.html'
-    controller: 'SignupCtrl'
+  # .state 'signup',
+  #   url: '/signup'
+  #   templateUrl: 'app/account/signup/signup.html'
+  #   controller: 'SignupCtrl'
 
   .state 'settings',
     url: '/settings'

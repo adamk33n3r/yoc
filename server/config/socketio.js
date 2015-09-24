@@ -18,6 +18,8 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/game/game.socket').register(socket);
+  require('../api/event/event.socket').register(socket);
   require('../api/thing/thing.socket').register(socket);
 }
 
@@ -48,11 +50,11 @@ module.exports = function(socketio) {
     // Call onDisconnect.
     socket.on('disconnect', function() {
       onDisconnect(socket);
-      console.info('[%s] DISCONNECTED', socket.address);
+      // console.info('[%s] DISCONNECTED', socket.address);
     });
 
     // Call onConnect.
     onConnect(socket);
-    console.info('[%s] CONNECTED', socket.address);
+    // console.info('[%s] CONNECTED', socket.address);
   });
 };

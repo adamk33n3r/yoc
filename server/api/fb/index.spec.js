@@ -3,11 +3,7 @@
 var proxyquire = require('proxyquire').noPreserveCache();
 
 var fbCtrlStub = {
-  index: 'fbCtrl.index',
-  show: 'fbCtrl.show',
-  create: 'fbCtrl.create',
-  update: 'fbCtrl.update',
-  destroy: 'fbCtrl.destroy'
+  send_notification: 'fbCtrl.send_notification',
 };
 
 var routerStub = {
@@ -34,64 +30,13 @@ describe('Fb API Router:', function() {
     fbIndex.should.equal(routerStub);
   });
 
-  describe('GET /api/fb', function() {
-
-    it('should route to fb.controller.index', function() {
-      routerStub.get
-                .withArgs('/', 'fbCtrl.index')
-                .should.have.been.calledOnce;
-    });
-
-  });
-
-  describe('GET /api/fb/:id', function() {
-
-    it('should route to fb.controller.show', function() {
-      routerStub.get
-                .withArgs('/:id', 'fbCtrl.show')
-                .should.have.been.calledOnce;
-    });
-
-  });
-
   describe('POST /api/fb', function() {
 
-    it('should route to fb.controller.create', function() {
+    it('should route to fb.controller.send_notification', function() {
       routerStub.post
-                .withArgs('/', 'fbCtrl.create')
+                .withArgs('/', 'fbCtrl.send_notification')
                 .should.have.been.calledOnce;
     });
 
   });
-
-  describe('PUT /api/fb/:id', function() {
-
-    it('should route to fb.controller.update', function() {
-      routerStub.put
-                .withArgs('/:id', 'fbCtrl.update')
-                .should.have.been.calledOnce;
-    });
-
-  });
-
-  describe('PATCH /api/fb/:id', function() {
-
-    it('should route to fb.controller.update', function() {
-      routerStub.patch
-                .withArgs('/:id', 'fbCtrl.update')
-                .should.have.been.calledOnce;
-    });
-
-  });
-
-  describe('DELETE /api/fb/:id', function() {
-
-    it('should route to fb.controller.destroy', function() {
-      routerStub.delete
-                .withArgs('/:id', 'fbCtrl.destroy')
-                .should.have.been.calledOnce;
-    });
-
-  });
-
 });
