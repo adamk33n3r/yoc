@@ -124,8 +124,8 @@ module.exports = function (grunt) {
         options: {
           livereload: {
             port: 35729,
-            key: grunt.file.read('/etc/nginx/ssl/server.key'),
-            cert: grunt.file.read('/etc/nginx/ssl/server.crt')
+            key: grunt.file.read('/etc/nginx/ssl/ssl.key'),
+            cert: grunt.file.read('/etc/nginx/ssl/ssl-unified.crt')
           }
         }
       },

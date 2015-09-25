@@ -20,8 +20,8 @@ div.navbar.navbar-default.navbar-static-top(ng-controller='NavbarCtrl')
         //- li(ng-hide='isLoggedIn()', ui-sref-active='active')
         //-   a(ui-sref='signup') Sign up
 
-        //- li(ng-hide='isLoggedIn()', ui-sref-active='active')
-        //-   a(ui-sref='login') Login
+        li(ng-hide='isLoggedIn()')
+          a(ng-click='fbLogin()', href='') Login
 
         li(ng-show='isLoggedIn()')
           p.navbar-text Hello {{ getCurrentUser().name }}

@@ -56,9 +56,14 @@ angular.module 'yocApp', [
       onLogin response
     else
       # Otherwise, show Login dialog first.
-      $facebook.login()
-      .then (response) ->
-        onLogin response, true
+      # $facebook.login()
+      # .then (response) ->
+      #   onLogin response, true
+
+  $rootScope.fbLogin = ->
+    $facebook.login()
+    .then (response) ->
+      onLogin response, true
 
   $rootScope.$on 'fb.auth.authResponseChange', (event, response, FB) ->
     $rootScope.status = $facebook.isConnected()
