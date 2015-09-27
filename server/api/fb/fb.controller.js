@@ -35,7 +35,7 @@ exports.send_notification_raw = function(uid, message, callback) {
 
   var data = {
     access_token: client_id + '|' + client_secret,
-    href: '?state=events.list',
+    href: '?path=/events/list',
     template: message && message.slice(0, 180) || 'This is a test notification'
   };
 

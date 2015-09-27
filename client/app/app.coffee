@@ -94,10 +94,9 @@ angular.module 'yocApp', [
   # Redirect to login if route requires auth and you're not logged in
   $rootScope.$on '$stateChangeStart', (event, next) ->
     searchObj = $location.search()
-    if 'state' of searchObj
-      if searchObj.state is 'event.list'
-        $location.path '/events/list'
-      $location.search 'state', null
+    if 'path' of searchObj
+      $location.path searchObj.path
+      $location.search 'path', null
     Auth.isLoggedIn (loggedIn) ->
       $state.go 'login' if next.authenticate and not loggedIn
 
