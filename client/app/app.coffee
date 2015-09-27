@@ -45,7 +45,8 @@ angular.module 'yocApp', [
             facebook: data
           newUser.$save()
             .catch (err) ->
-              alert "Failed to create user. Contact admin."
+              console.log err
+              #alert "Failed to create user. Contact admin."
     else
       alert "You must login with Facebook in order to use this app."
 
@@ -89,9 +90,14 @@ angular.module 'yocApp', [
 
     $q.reject response
 
-.run ($rootScope, $state, Auth) ->
+.run ($rootScope, $state, $location, Auth) ->
   # Redirect to login if route requires auth and you're not logged in
   $rootScope.$on '$stateChangeStart', (event, next) ->
+    searchObj = $location.search()
+    if 'state' of searchObj
+      if searchObj.state is 'event.list'
+        $location.path '/events/list'
+      $location.search 'state', null
     Auth.isLoggedIn (loggedIn) ->
       $state.go 'login' if next.authenticate and not loggedIn
 
