@@ -34,9 +34,9 @@ exports.send_notification_raw = function(uid, message, callback) {
   var url = "https://graph.facebook.com/v2.4/" + uid + "/notifications";
 
   var data = {
-    "access_token": client_id + '|' + client_secret,
-    "href": "",
-    "template": message && message.slice(0, 180) || 'This is a test notification'
+    access_token: client_id + '|' + client_secret,
+    href: '?state=events.list',
+    template: message && message.slice(0, 180) || 'This is a test notification'
   };
 
   request.post(url, { form: data }, callback);
