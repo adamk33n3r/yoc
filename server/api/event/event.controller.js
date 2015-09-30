@@ -10,9 +10,11 @@
 'use strict';
 
 var _ = require('lodash');
+var Promise = require('promise');
+var Mailer = require('../../services/mailer');
+
 var Event = require('./event.model');
 var User = require('../user/user.model');
-var Promise = require('promise');
 var FB = require('../fb/fb.controller');
 
 function handleError(res, statusCode) {
@@ -155,12 +157,23 @@ exports.check = function(req, res) {
     .then(function(events) {
       var tasks = events.map(function(evnt) {
         var message = evnt.name + ' (' + evnt.game.name + ') is starting in ';
+        var mailer = new Mailer('yoc-game-notification');
+        mailer.setData({
+          event: evnt.name,
+          game: evnt.game.name
+        });
         if (!evnt.sent24Hr) {
           if (evnt.date - Date.now() < day) {
             console.log("Sending 24hr");
             evnt.sent24Hr = true;
             evnt.attendees.forEach(function(user) {
               FB.send_notification_raw(user.facebook.id, message + '24 hours!');
+              if (user.email) {
+                mailer.addRecipient(user.name.full, user.email, {
+                  name: user.name.first,
+                  time: '24 hours'
+                });
+              }
             });
           }
         } else if (!evnt.sent1Hr) {
@@ -169,6 +182,12 @@ exports.check = function(req, res) {
             evnt.sent1Hr = true;
             evnt.attendees.forEach(function(user) {
               FB.send_notification_raw(user.facebook.id, message + 'an hour!');
+              if (user.email) {
+                mailer.addRecipient(user.name.full, user.email, {
+                  name: user.name.first,
+                  time: '1 hour'
+                });
+              }
             });
           }
         } else if (!evnt.sent15Min) {
@@ -177,9 +196,16 @@ exports.check = function(req, res) {
             evnt.sent15Min = true;
             evnt.attendees.forEach(function(user) {
               FB.send_notification_raw(user.facebook.id, message + '15 minutes!');
+              if (user.email) {
+                mailer.addRecipient(user.name.full, user.email, {
+                  name: user.name.first,
+                  time: '15 minutes'
+                });
+              }
             });
           }
         }
+        mailer.send();
         return evnt.saveAsync();
       });
       Promise.all(tasks).then(function(events) {

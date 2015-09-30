@@ -19,6 +19,18 @@ var UserSchema = new Schema({
     default: 'user'
   },
   facebook: {},
+  settings: {
+    notifications: {
+      facebook: {
+        type: Boolean,
+        default: true
+      },
+      email: {
+        type: Boolean,
+        default: false
+      }
+    }
+  }
 });
 
 /**
