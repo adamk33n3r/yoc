@@ -7,6 +7,11 @@
 // Set default node environment to development
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
+process.on('uncaughtException', function (err) {
+  console.error("!!!!!Uncaught Exception!!!!!");
+  console.error(err);
+});
+
 var express = require('express');
 var mongoose = require('mongoose-bird')();
 var config = require('./config/environment');

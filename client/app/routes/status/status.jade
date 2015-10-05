@@ -1,0 +1,13 @@
+.container
+  .panel(ng-class="{ 'panel-success': ts.online, 'panel-danger': !ts.online }")
+    .panel-heading: h2.panel-title TeamSpeak
+    .panel-body
+      .row
+        .col-sm-12
+          p If there are multiple of the same name that means that that user logged in on more than one machine.
+      .row
+        .col-sm-6
+          ul.list-group
+            li.list-group-item(ng-repeat="(name, user) in ts.users")
+              span.fa.fa-circle(ng-class="{ online: user.online, offline: !user.online }")&nbsp;
+              | {{ name }}

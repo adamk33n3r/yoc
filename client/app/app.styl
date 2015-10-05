@@ -90,9 +90,50 @@ $brand-danger  = #d9534f
 
 
 
+panel-title(fs)
+  font-size: fs
+  display: inline
+
+.panel-title
+  h1&, .h1&
+    panel-title(36px)
+  h2&, .h2&
+    panel-title(30px)
+  h3&, .h3&
+    panel-title(24px)
+  h4&, .h4&
+    panel-title(18px)
+  h5&, .h5&
+    panel-title(14px)
+  h6&, .h6&
+    panel-title(12px)
 
 
+back-border(bg)
+  background: bg
+  border-color: darken(bg, 5%)
+  color: #fff
 
+.panel-heading
+  .panel-primary > &
+    back-border($brand-primary)
+  .panel-success > &
+    back-border($brand-success)
+  .panel-info > &
+    back-border($brand-info)
+  .panel-warning > &
+    back-border($brand-warning)
+  .panel-danger > &
+    back-border($brand-danger)
+
+.online, .offline
+  font-size: 10px
+
+.online
+  color: $brand-success
+
+.offline
+  color: #aaa
 
 
 // Component styles are injected through grunt
@@ -101,6 +142,7 @@ $brand-danger  = #d9534f
 @import 'admin/admin.styl';
 @import 'main/main.styl';
 @import 'routes/event/event.styl';
+@import 'routes/status/status.styl';
 @import 'footer/footer.styl';
 @import 'modal/modal.styl';
 // endinjector

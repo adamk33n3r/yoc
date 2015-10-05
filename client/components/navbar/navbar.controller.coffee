@@ -8,6 +8,9 @@ angular.module 'yocApp'
   ,
     title: 'Events'
     state: 'event'
+  ,
+    title: 'Status',
+    state: 'status'
   ]
   $scope.isCollapsed = true
   $scope.isLoggedIn = ->
