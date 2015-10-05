@@ -22,7 +22,7 @@ var SparkPostMailer = function (template_id) {
   this.recipients = [];
   this.data = {};
   this.template_id = template_id;
-}
+};
 
 SparkPostMailer.prototype.addRecipient = function (name, address, data) {
   var recipient = {
@@ -37,11 +37,11 @@ SparkPostMailer.prototype.addRecipient = function (name, address, data) {
   }
 
   this.recipients.push(recipient);
-}
+};
 
 SparkPostMailer.prototype.setData = function (data) {
   this.data = data;
-}
+};
 
 SparkPostMailer.prototype.send = function () {
   ths = this;
@@ -64,6 +64,6 @@ SparkPostMailer.prototype.send = function () {
       });
     }
   });
-}
+};
 
 module.exports = SparkPostMailer;
