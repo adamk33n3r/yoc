@@ -5,8 +5,10 @@ angular.module 'yocApp'
   $scope.ts =
     online: false
     users: {}
+    loaded: false
   $http.get '/api/services/teamspeak/status'
   .success (result) ->
+    $scope.ts.loaded = true
     $scope.ts.online = true
     for client in result.data.clients
       onlineUser = (result.data.online.filter (ele) ->
@@ -18,6 +20,7 @@ angular.module 'yocApp'
         away: onlineUser?.client_away
         online: onlineUser?
   .catch (error) ->
+    $scope.ts.loaded = true
     console.error "Couldn't connect to teamspeak server"
     console.error error
 

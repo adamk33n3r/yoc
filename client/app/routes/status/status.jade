@@ -2,9 +2,15 @@
   .panel(ng-class="{ 'panel-success': ts.online, 'panel-danger': !ts.online }")
     .panel-heading: h2.panel-title TeamSpeak
     .panel-body
-      .row
-        .col-sm-6
+      .row(ng-show="ts.loaded && ts.online")
+        .col-xs-12
+          h3 Users
           ul.list-group
             li.list-group-item(ng-repeat="(name, user) in ts.users")
               span.fa.fa-circle(ng-class="{ online: user.online, offline: !user.online }")&nbsp;
               | {{ name }}
+      .row(ng-show="ts.loaded && !ts.online"): .col-xs-12
+        p
+          | The TeamSpeak server is down. Let me know&nbsp;
+          a(href="https://ye-olde-chums.slack.com/messages/@adam.keenan/") here
+          | .
