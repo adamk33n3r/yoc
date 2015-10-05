@@ -13,9 +13,7 @@ angular.module 'yocApp'
         return ele.client_database_id is client.cldbid
       )[0]
       if $scope.ts.users[client.client_nickname]?.online
-        console.log "continuing"
         continue
-      # continue if not (onlineUser and client.client_nickname of $scope.ts.users)
       $scope.ts.users[client.client_nickname] =
         away: onlineUser?.client_away
         online: onlineUser?
