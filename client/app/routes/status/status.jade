@@ -1,10 +1,14 @@
 .container
   .panel(ng-class="{ 'panel-success': ts.online, 'panel-danger': !ts.online }")
-    .panel-heading: h2.panel-title TeamSpeak
+    .panel-heading: h2.panel-title
+      span.fa.fa-server &nbsp;
+      | TeamSpeak
     .panel-body
       .row(ng-show="ts.loaded && ts.online")
-        .col-xs-12
-          h3 Users
+        .col-sm-offset-3.col-sm-6
+          h3
+            span.fa.fa-users &nbsp;
+            | Users
           ul.list-group
             li.list-group-item(ng-repeat="(name, user) in ts.users")
               span.fa.fa-circle(ng-class="{ online: user.online, offline: !user.online }")&nbsp;
@@ -14,3 +18,11 @@
           | The TeamSpeak server is down. Let me know&nbsp;
           a(href="https://ye-olde-chums.slack.com/messages/@adam.keenan/") here
           | .
+  .panel(ng-class="{ 'panel-success': mc.online, 'panel-danger': !mc.online }")
+    .panel-heading: h2.panel-title
+      span.fa.fa-server &nbsp;
+      | Minecraft
+    .panel-body
+      .row
+        .col-sm-offset-3.col-sm-6
+          center: h1 Coming soon!
