@@ -39,16 +39,9 @@
 
 
 
-
-
 .ui-select-container.no-height
   .form-control
     height: initial
-
-
-
-
-
 
 
 $brand-primary = darken(#428bca, 6.5%) // #337ab7
@@ -88,8 +81,6 @@ $brand-danger  = #d9534f
   cursor: pointer
 
 
-
-
 panel-title(fs)
   font-size: fs
   display: inline
@@ -126,7 +117,7 @@ back-border(bg)
   .panel-danger > &
     back-border($brand-danger)
 
-.online, .offline
+.online, .offline, .away
   font-size: 12px
 
 .online
@@ -135,6 +126,12 @@ back-border(bg)
 .offline
   color: #aaa
 
+.away
+  color: $brand-warning
+
+
+.link
+  cursor: pointer
 
 // Component styles are injected through grunt
 // injector

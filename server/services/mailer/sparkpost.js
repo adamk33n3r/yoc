@@ -45,7 +45,7 @@ SparkPostMailer.prototype.setData = function (data) {
 
 SparkPostMailer.prototype.send = function () {
   ths = this;
-  return new Promise(function (fullfill, reject) {
+  return new Promise(function (fulfill, reject) {
     if (ths.recipients.length === 0) {
       reject(new Error('Must add a recipient'));
     } else {
@@ -59,7 +59,7 @@ SparkPostMailer.prototype.send = function () {
         if (err) {
           reject(err);
         } else {
-          fullfill(info);
+          fulfill(info);
         }
       });
     }

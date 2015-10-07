@@ -1,28 +1,53 @@
 .container
-  .panel(ng-class="{ 'panel-success': ts.online, 'panel-danger': !ts.online }")
+  .panel(ng-class="boolClass(teamspeak.online, 'panel')")
     .panel-heading: h2.panel-title
       span.fa.fa-server &nbsp;
       | TeamSpeak
+      button.btn.pull-right(ng-class="boolClass(teamspeak.online, 'btn')", ng-click="refresh('teamspeak')")
+        span.fa.fa-refresh.fa-spin(ng-class="{ 'fa-spin': !teamspeak.loaded }")
     .panel-body
-      .row(ng-show="ts.loaded && ts.online")
+      .row(ng-show="teamspeak.loaded && teamspeak.online")
         .col-sm-offset-3.col-sm-6
           h3
             span.fa.fa-users &nbsp;
             | Users
           ul.list-group
-            li.list-group-item(ng-repeat="(name, user) in ts.users")
-              span.fa.fa-circle(ng-class="{ online: user.online, offline: !user.online }")&nbsp;
-              | {{ name }}
-      .row(ng-show="ts.loaded && !ts.online"): .col-xs-12
+            li.list-group-item(ng-repeat="user in teamspeak.users")
+              span.fa.fa-circle(ng-class="{\
+                online: user.online && !user.away,\
+                offline: !user.online,\
+                away: user.away\
+              }")&nbsp;
+              | {{ user.name }}
+      .row(ng-show="teamspeak.loaded && !teamspeak.online"): .col-xs-12
         p
           | The TeamSpeak server is down. Let me know&nbsp;
           a(href="https://ye-olde-chums.slack.com/messages/@adam.keenan/") here
           | .
-  .panel(ng-class="{ 'panel-success': mc.online, 'panel-danger': !mc.online }")
+      .row(ng-hide="teamspeak.loaded"): .col-xs-12
+        p Loading...
+  .panel(ng-class="boolClass(minecraft.online, 'panel')")
     .panel-heading: h2.panel-title
       span.fa.fa-server &nbsp;
       | Minecraft
+      button.btn.pull-right(ng-class="boolClass(minecraft.online, 'btn')", ng-click="refresh('minecraft')")
+        span.fa.fa-refresh(ng-class="{ 'fa-spin': !minecraft.loaded }")
     .panel-body
-      .row
+      .row(ng-show="minecraft.loaded && minecraft.online")
         .col-sm-offset-3.col-sm-6
-          center: h1 Coming soon!
+          h3
+            span.fa.fa-users &nbsp;
+            | Users
+          ul.list-group
+            li.list-group-item(ng-repeat="user in minecraft.data.player_")
+              span.fa.fa-circle.online&nbsp;
+              | {{ user }}
+            li.list-group-item(ng-show="minecraft.data.player_.length === 0")
+              | No players currently on
+      .row(ng-show="minecraft.loaded && !minecraft.online"): .col-xs-12
+        p
+          | The Minecraft server is down (or sleeping). Let me know&nbsp;
+          a(href="https://ye-olde-chums.slack.com/messages/@adam.keenan/") here
+          | &nbsp;if it's actually down.
+      .row(ng-hide="minecraft.loaded"): .col-xs-12
+        p Loading...

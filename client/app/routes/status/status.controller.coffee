@@ -1,26 +1,27 @@
 'use strict'
 
 angular.module 'yocApp'
-.controller 'StatusCtrl', ($scope, $http) ->
-  $scope.ts =
+.controller 'StatusCtrl', ($scope, Status) ->
+  $scope.teamspeak =
     online: false
-    users: {}
     loaded: false
-  $http.get '/api/services/teamspeak/status'
-  .success (result) ->
-    $scope.ts.loaded = true
-    $scope.ts.online = true
-    for client in result.data.clients
-      onlineUser = (result.data.online.filter (ele) ->
-        return ele.client_database_id is client.cldbid
-      )[0]
-      if $scope.ts.users[client.client_nickname]?.online
-        continue
-      $scope.ts.users[client.client_nickname] =
-        away: onlineUser?.client_away
-        online: onlineUser?
-  .catch (error) ->
-    $scope.ts.loaded = true
-    console.error "Couldn't connect to teamspeak server"
-    console.error error
+  $scope.minecraft =
+    online: false
+    loaded: false
 
+  $scope.boolClass = (obj, classPrefix) ->
+    return classPrefix + if obj then '-success' else '-danger'
+
+  $scope.refresh = (serverName) ->
+    server = $scope[serverName]
+    server.loaded = false
+    $scope[serverName + 'Refresh']()
+
+  $scope.teamspeakRefresh = ->
+    Status.teamspeak $scope
+
+  $scope.minecraftRefresh = ->
+    Status.minecraft $scope
+
+  $scope.teamspeakRefresh()
+  $scope.minecraftRefresh()
