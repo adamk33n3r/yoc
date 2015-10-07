@@ -11,6 +11,7 @@
 
 var _ = require('lodash');
 var request = require('request');
+var config = require('../../config/environment');
 
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
@@ -28,13 +29,15 @@ function responseWithResult(res, statusCode) {
   };
 }
 
+exports.getToken = function (req, res) {
+  res.json(config.facebook);
+}
+
 exports.send_notification_raw = function(uid, message, callback) {
-  var client_id = "1643391279210026";
-  var client_secret = "5516ce513d02afe814c7214659259a94";
   var url = "https://graph.facebook.com/v2.4/" + uid + "/notifications";
 
   var data = {
-    access_token: client_id + '|' + client_secret,
+    access_token: config.facebook.id + '|' + config.facebook.secret,
     href: '?path=/events/list',
     template: message && message.slice(0, 180) || 'This is a test notification'
   };

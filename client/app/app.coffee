@@ -13,12 +13,15 @@ angular.module 'yocApp', [
   'angularMoment'
 ]
 .config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $facebookProvider) ->
-  $facebookProvider.setAppId '1643391279210026'
-  .setCustomInit
-    xfbml: true
-    version: 'v2.4'
-  $urlRouterProvider
-  .otherwise '/'
+  $.get '/api/fb/get-token'
+  .then (facebook) ->
+    console.log facebook
+    $facebookProvider.setAppId facebook.id
+    .setCustomInit
+      xfbml: true
+      version: 'v2.4'
+    $urlRouterProvider
+    .otherwise '/'
 
   $locationProvider.html5Mode true
   $httpProvider.interceptors.push 'authInterceptor'
