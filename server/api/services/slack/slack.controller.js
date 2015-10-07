@@ -1,8 +1,8 @@
+var config = require('../../../config/environment');
 var Slack = require('../../../services/slack');
 
-
 exports.send = function(req, res) {
-  Slack.sendMessage({
+  Slack.sendMessage(config.slack.url, {
     channel: req.body.channel || '#tcpi',
     text: req.body.text || 'No text provided.'
   }, function (err, response, body) {
@@ -18,4 +18,4 @@ exports.send = function(req, res) {
       }
     }
   });
-}
+};

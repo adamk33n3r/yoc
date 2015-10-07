@@ -1,9 +1,8 @@
-var config = require('../../config/environment');
 var request = require('request');
 
 var Slack = {}
 
-Slack.sendMessage = function(payload, callback) {
+Slack.sendMessage = function(url, payload, callback) {
   if (typeof payload === 'string') {
     payload = {
       text: payload
@@ -11,7 +10,7 @@ Slack.sendMessage = function(payload, callback) {
   }
   payload.link_names = true
   request.post({
-    url: config.slack.url,
+    url: url,
     form: {
       payload: JSON.stringify(payload).replace(/\\\\/g, '\\')
     }

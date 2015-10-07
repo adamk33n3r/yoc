@@ -25,6 +25,7 @@ angular.module 'yocApp', [
 
 .controller 'MainController', ($rootScope, $facebook, User) ->
   console.log "Booting app..."
+  $rootScope.version = '1.5.0'
   $rootScope.facebookLoaded = false
   $rootScope.user_id = "0000000000"
   $rootScope.message = "This is a test notification from @[10207313578220466]"
