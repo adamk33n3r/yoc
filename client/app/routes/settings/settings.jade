@@ -5,9 +5,15 @@
   .row: .col-xs-12
     h2 Notification Preferences
     .btn-group
-      label.btn.btn-primary(ng-model="notifications.facebook", btn-checkbox="") Facebook
-      label.btn.btn-primary(ng-model="notifications.slack", btn-checkbox="") Slack
-      label.btn.btn-primary(ng-model="notifications.email", btn-checkbox="") Email
+      label.btn(ng-class="boolSuccessDanger(notifications.facebook, 'btn')", ng-model="notifications.facebook", btn-checkbox="")
+        | Facebook&nbsp;
+        span.fa(ng-class="boolCheckTimes(notifications.facebook)")
+      label.btn(ng-class="boolSuccessDanger(notifications.slack, 'btn')", ng-model="notifications.slack", btn-checkbox="")
+        | Slack&nbsp;
+        span.fa(ng-class="boolCheckTimes(notifications.slack)")
+      label.btn(ng-class="boolSuccessDanger(notifications.email, 'btn')", ng-model="notifications.email", btn-checkbox="")
+        | Email&nbsp;
+        span.fa(ng-class="boolCheckTimes(notifications.email)")
   br
   .row: .col-xs-12
     h2 Username Linking
