@@ -10,7 +10,8 @@ angular.module 'yocApp', [
   'ngFacebook',
   'ui.select',
   'ui.bootstrap.datetimepicker',
-  'angularMoment'
+  'angularMoment',
+  'config'
 ]
 .config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $facebookProvider) ->
   $.get '/api/fb/get-token'
@@ -26,9 +27,9 @@ angular.module 'yocApp', [
   $locationProvider.html5Mode true
   $httpProvider.interceptors.push 'authInterceptor'
 
-.controller 'MainController', ($rootScope, $facebook, User) ->
+.controller 'MainController', ($rootScope, $facebook, version, User) ->
   console.log "Booting app..."
-  $rootScope.version = '1.5.0'
+  $rootScope.version = version
   $rootScope.facebookLoaded = false
   $rootScope.user_id = "0000000000"
   $rootScope.message = "This is a test notification from @[10207313578220466]"

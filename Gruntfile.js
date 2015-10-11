@@ -2,11 +2,13 @@
 'use strict';
 
 module.exports = function (grunt) {
-  var localConfig;
+  var localConfig, envConfig;
   try {
     localConfig = require('./server/config/local.env');
+    envConfig = require('./server/config/environment');
   } catch(e) {
     localConfig = {};
+    envConfig = {};
   }
 
   // Load grunt tasks automatically, when needed
@@ -22,9 +24,27 @@ module.exports = function (grunt) {
 
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
+  grunt.loadNpmTasks('grunt-ng-constant');
 
   // Define the configuration for all the tasks
   grunt.initConfig({
+    ngconstant: {
+      options: {
+        name: 'config',
+        dest: 'client/config.js',
+        constants: {
+          version: grunt.file.readJSON('package.json').version,
+          env: process.env.NODE_ENV || 'development',
+          fb: envConfig.facebook
+        }
+      },
+      build: {
+
+      },
+      dev: {
+
+      }
+    },
 
     // Project settings
     pkg: grunt.file.readJSON('package.json'),
@@ -723,6 +743,7 @@ module.exports = function (grunt) {
       'injector',
       'wiredep',
       'autoprefixer',
+      'ngconstant:dev',
       'express:dev',
       'wait',
       //'open',
@@ -837,6 +858,7 @@ module.exports = function (grunt) {
     'ngtemplates',
     'concat',
     'ngAnnotate',
+    'ngconstant:build',
     'copy:dist',
     'cdnify',
     'cssmin',
