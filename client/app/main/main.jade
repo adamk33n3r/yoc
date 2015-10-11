@@ -7,7 +7,15 @@ br
 .container
   .row: .col-xs-12(style="text-align: center")
     h2 Hey! Do you want to be #[strong cool]?
-    h4 Here is a picture that you can use to brandish your affiliation on all of the online communities.
-    a(href="/assets/images/yoc-profile.png", target="_blank")
-      img.img-thumbnail.image-profile(src="/assets/images/yoc-profile.png")
+    h4 Here are pictures that you can use to brandish your affiliation on all of the online communities.
+    .row
+      .col-sm-4: a(href="/assets/images/yoc-profile.png", target="_blank")
+        img.img-thumbnail.image-profile(src="/assets/images/yoc-profile.png")
+        p White Background
+      .col-sm-4: a(href="/assets/images/yoc.png", target="_blank")
+        img.img-thumbnail.image-profile(src="/assets/images/yoc-profile.png")
+        p Transparent Background
+      .col-sm-4: a(href="/assets/images/yoc-transparent.png", target="_blank")
+        img.img-thumbnail.image-profile(src="/assets/images/yoc-profile.png")
+        p Transparent Background/Center
 footer
