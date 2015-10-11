@@ -39,7 +39,9 @@ module.exports = function (grunt) {
         }
       },
       build: {
-
+        options: {
+          dest: 'dist/client/config.js'
+        }
       },
       dev: {
 
