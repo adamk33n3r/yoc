@@ -1,7 +1,9 @@
 var Query = require('mcquery');
 
 var Minecraft = function (host, port) {
-  this.query = new Query(host, port);
+  this.query = new Query(host, port, {
+    timeout: 1500
+  });
   this.connected = false;
 };
 
