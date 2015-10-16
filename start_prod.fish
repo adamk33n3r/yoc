@@ -2,4 +2,5 @@
 
 set -x NODE_ENV production
 
-forever start ./dist/server
+rm ~/.forever/yoc.log
+forever start -l ~/.forever/yoc.log ./dist/server
