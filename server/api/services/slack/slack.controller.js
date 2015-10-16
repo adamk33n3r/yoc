@@ -58,7 +58,7 @@ var mc_status = function (req, res) {
 exports.status = function (req, res) {
   var service = req.query.text.split(' ')[0];
   if (!service) {
-    res.send('Available services: ts');
+    res.send('Available services: ts, mc');
   } else if (service === 'ts') {
     ts_status(req, res);
   } else if (service === 'mc') {
