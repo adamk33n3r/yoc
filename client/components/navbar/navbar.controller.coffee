@@ -8,6 +8,7 @@ angular.module 'yocApp'
   ,
     title: 'Events'
     state: 'event'
+    auth: true
   ,
     title: 'Status',
     state: 'status'
