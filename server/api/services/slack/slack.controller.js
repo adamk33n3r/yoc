@@ -30,9 +30,13 @@ var ts_status = function (req, res) {
   .then(function() {
     ts.getOnlineClients()
     .then(function(onlineClients) {
-      res.send(onlineClients.map(function (ele) {
-        return ele.client_nickname;
-      }).join(', '));
+      if (onlineClients.length > 0) {
+        res.send(onlineClients.map(function (ele) {
+          return ele.client_nickname;
+        }).join(', '));
+      } else {
+        res.send('No one is online at the moment');
+      }
       ts.close();
     })
     .catch(function(err) {
@@ -48,7 +52,12 @@ var mc_status = function (req, res) {
   var mc = new Minecraft(config.minecraft.host, config.minecraft.port);
   mc.connect().then(function () {
     mc.status().then(function (stat) {
-      res.json(stat);
+      var players = stat.data.player_;
+      if (players.length > 0) {
+        res.send(players.join(', '));
+      } else {
+        res.send('No one is online at the moment');
+      }
     });
   }).catch(function (err) {
     res.send('Minecraft server is offline');
