@@ -10,8 +10,11 @@ angular.module 'yocApp'
     state: 'event'
     auth: true
   ,
-    title: 'Status',
+    title: 'Status'
     state: 'status'
+  ,
+    title: 'Stream'
+    state: 'stream'
   ]
   $scope.isCollapsed = true
   $scope.isLoggedIn = ->
@@ -19,3 +22,6 @@ angular.module 'yocApp'
   $scope.isAdmin = Auth.isAdmin
   $scope.getCurrentUser = ->
     $rootScope.user
+
+  $scope.collapse = ->
+    $scope.isCollapsed = true

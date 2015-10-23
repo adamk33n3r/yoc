@@ -12,7 +12,7 @@ div.navbar.navbar-default.navbar-static-top(ng-controller='NavbarCtrl')
 
     div#navbar-main.navbar-collapse.collapse(collapse='isCollapsed')
       ul.nav.navbar-nav
-        li(ng-if='!item.auth || (item.auth && isLoggedIn())', ng-repeat='item in menu', ui-sref-active='active')
+        li(ng-if='!item.auth || (item.auth && isLoggedIn())', ng-repeat='item in menu', ui-sref-active='active', ng-click='collapse()')
           a(ui-sref='{{item.state}}') {{item.title}}
 
         li(ng-if='isAdmin()', ui-sref-active='active')
@@ -25,7 +25,7 @@ div.navbar.navbar-default.navbar-static-top(ng-controller='NavbarCtrl')
         li(ng-hide='isLoggedIn()')
           a(ng-click='fbLogin()', href='') Login
 
-        li(ng-show='isLoggedIn()', ui-sref-active='active')
+        li(ng-show='isLoggedIn()', ui-sref-active='active', ng-click='collapse()')
           a(ui-sref='settings') Settings
 
         li(ng-show='isLoggedIn()')
