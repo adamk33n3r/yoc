@@ -3,7 +3,6 @@
 
 module.exports = function (grunt) {
   var localConfig;
-  //process.env.NODE_ENV = process.env.NODE_ENV || 'development';
   try {
     localConfig = require('./server/config/local.env');
   } catch(e) {
