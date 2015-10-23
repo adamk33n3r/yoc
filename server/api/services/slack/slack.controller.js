@@ -4,7 +4,7 @@ var TeamSpeak = require('../../../services/teamspeak');
 var Minecraft = require('../../../services/minecraft');
 
 exports.send = function (req, res) {
-  Slack.sendMessage(config.slack.url, {
+  Slack.sendMessage(config.slack.webhook, {
     channel: req.body.channel || '#tcpi',
     text: req.body.text || 'No text provided.'
   }, function (err, response, body) {

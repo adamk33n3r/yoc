@@ -2,13 +2,12 @@
 'use strict';
 
 module.exports = function (grunt) {
-  var localConfig, envConfig;
+  var localConfig;
+  //process.env.NODE_ENV = process.env.NODE_ENV || 'development';
   try {
     localConfig = require('./server/config/local.env');
-    envConfig = require('./server/config/environment');
   } catch(e) {
     localConfig = {};
-    envConfig = {};
   }
 
   // Load grunt tasks automatically, when needed
@@ -35,7 +34,10 @@ module.exports = function (grunt) {
         constants: {
           version: grunt.file.readJSON('package.json').version,
           env: process.env.NODE_ENV || 'development',
-          fb: envConfig.facebook
+          fb: {
+            id: localConfig.FACEBOOK_ID,
+            secret: localConfig.FACEBOOK_SECRET
+          }
         }
       },
       build: {

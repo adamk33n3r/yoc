@@ -3,10 +3,10 @@ version = require './package.json'
 .version
 
 process.env.NODE_ENV = 'development'
-url = require './server/config/environment'
-.slack.url
+webhook = require './server/config/environment'
+.slack.webhook
 
-slack.sendMessage url,
+slack.sendMessage webhook,
   text: "@everyone: The portal has just been updated to version #{version}!"
   attachments: [
     fallback: "#{process.argv[2]}"
