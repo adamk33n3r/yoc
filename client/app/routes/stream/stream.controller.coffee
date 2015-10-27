@@ -2,7 +2,6 @@
 
 angular.module 'yocApp'
 .controller 'StreamCtrl', ($scope) ->
-  console.log "Asdf"
   flowplayer 'stream', '/assets/flowplayer/flash/flowplayer-3.2.18.swf',
     clip:
       url: 'movienight'
