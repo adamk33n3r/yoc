@@ -7,7 +7,7 @@ function handleResponse(response) {
 function stripQueryClients(clients) {
     return clients.filter(function (client) {
         return !client.client_type && client.client_unique_identifier !== 'ServerQuery';
-    })
+    });
 }
 
 var TeamSpeak = function (url, onError) {
@@ -40,6 +40,16 @@ TeamSpeak.prototype.getOnlineClients = function () {
     return this.client.send('clientlist', {}, ['away'])
         .then(handleResponse)
         .then(stripQueryClients);
+}
+
+TeamSpeak.prototype.getChannel = function (id) {
+    return this.client.send('channelinfo', { cid: id })
+        .then(handleResponse);
+}
+
+TeamSpeak.prototype.getChannels = function () {
+    return this.client.send('channellist')
+        .then(handleResponse);
 }
 
 TeamSpeak.prototype.close = function () {

@@ -8,17 +8,25 @@
     .panel-body
       .row(ng-show="teamspeak.loaded && teamspeak.online")
         .col-sm-offset-3.col-sm-6
-          h3
-            span.fa.fa-users &nbsp;
-            | Users
-          ul.list-group
-            li.list-group-item(ng-repeat="user in teamspeak.users")
-              span.fa.fa-circle(ng-class="{\
-                online: user.online && !user.away,\
-                offline: !user.online,\
-                away: user.away\
-              }")&nbsp;
-              | {{ user.name }}
+          ul.list-unstyled
+            li(ng-repeat="channel in teamspeak.channels")
+              h3 {{ channel.channel_name }}
+              ul.list-group
+                li.list-group-item(ng-repeat="user in channel.users")
+                  span.fa.fa-circle(ng-class="{\
+                    online: user.online && !user.away,\
+                    away: user.away\
+                  }")&nbsp;
+                  | {{ user.name }}
+                li.list-group-item(ng-if="channel.users.length === 0")
+                  | No users in channel
+            li
+              h3: em Offline
+              ul.list-group
+                li.list-group-item(ng-repeat="user in teamspeak.offlineUsers")
+                  span.fa.fa-circle.offline
+                  | &nbsp; {{ user.name }}
+
       .row(ng-show="teamspeak.loaded && !teamspeak.online"): .col-xs-12
         p
           | The TeamSpeak server is down. Let me know&nbsp;

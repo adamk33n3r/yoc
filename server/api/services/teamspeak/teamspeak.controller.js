@@ -7,13 +7,14 @@ exports.status = function(req, res) {
     });
     ts.login(config.teamspeak.username, config.teamspeak.password)
     .then(function() {
-      Promise.all([ts.getOnlineClients(), ts.getClients()])
+      Promise.all([ts.getOnlineClients(), ts.getClients(), ts.getChannels()])
       .then(function(results) {
         res.json({
           success: true,
           data: {
             online: results[0],
-            clients: results[1]
+            clients: results[1],
+            channels: results[2]
           }
         });
         ts.close();
