@@ -38,7 +38,7 @@ exports.send_notification_raw = function(uid, message, callback) {
 
   var data = {
     access_token: config.facebook.id + '|' + config.facebook.secret,
-    href: '?path=/events/list',
+    href: '/',
     template: message && message.slice(0, 180) || 'This is a test notification'
   };
 

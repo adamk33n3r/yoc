@@ -7,7 +7,6 @@
 
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
-var Event = require('../api/event/event.model');
 
 var thingPromise = Thing.find({}).removeAsync()
   .then(function() {
@@ -86,7 +85,5 @@ var userPromise = User.find({}).removeAsync()
     });
   });
 
-var eventPromise = Event.find({}).removeAsync();
-
 var Promise = require('promise');
-module.exports = Promise.all([thingPromise, userPromise, eventPromise]);
+module.exports = Promise.all([thingPromise, userPromise]);
