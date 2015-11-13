@@ -41,6 +41,7 @@ angular.module 'yocApp', [
         $rootScope.user_id = data.id
         console.log "User id is #{data.id}"
         $rootScope.facebookLoaded = true
+        $rootScope.$broadcast 'loggedin', data.id
         if firstTime
           console.log "Creating new user"
           newUser = new User

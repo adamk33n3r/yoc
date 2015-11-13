@@ -2,47 +2,46 @@
   .row: .col-xs-12
     h1 Settings
     hr
-  .row: .col-xs-12
-    h2 Notification Preferences
-    .btn-group
-      label.btn(ng-class="boolSuccessDanger(notifications.facebook, 'btn')", ng-model="notifications.facebook", btn-checkbox="")
-        | Facebook&nbsp;
-        span.fa(ng-class="boolCheckTimes(notifications.facebook)")
-      label.btn(ng-class="boolSuccessDanger(notifications.slack, 'btn')", ng-model="notifications.slack", btn-checkbox="")
-        | Slack&nbsp;
-        span.fa(ng-class="boolCheckTimes(notifications.slack)")
-      label.btn(ng-class="boolSuccessDanger(notifications.email, 'btn')", ng-model="notifications.email", btn-checkbox="")
-        | Email&nbsp;
-        span.fa(ng-class="boolCheckTimes(notifications.email)")
-  br
-  .row: .col-xs-12
-    h2 Username Linking
-    .row
-      .col-sm-6
-        h3 TeamSpeak
-        ul.list-group
-          li.list-group-item(ng-repeat="username in teamspeak.names")
-            | {{ username }}
-            button.btn.btn-sm.btn-danger.pull-right(ng-click="removeUsername(teamspeak, username)", style="margin-top: -5px")
-              span.fa.fa-times
-          li.list-group-item
-            form.input-group
-              input.form-control(ng-model="teamspeak.add", placeholder="Username")
-              span.input-group-btn
-                button.btn.btn-primary(ng-click="addUsername(teamspeak)")
-                  | Add&nbsp;
-                  span.fa.fa-plus
-      .col-sm-6
-        h3 Minecraft
-        ul.list-group
-          li.list-group-item(ng-repeat="username in minecraft.names")
-            | {{ username }}
-            button.btn.btn-sm.btn-danger.pull-right(ng-click="removeUsername(minecraft, username)", style="margin-top: -5px")
-              span.fa.fa-times
-          li.list-group-item
-            form.input-group
-                input.form-control(ng-model="minecraft.add", placeholder="Username")
+  div(ng-show="loaded")
+    .row: .col-xs-12
+      h2 Notification Preferences
+      .btn-group
+        label.btn(ng-class="boolSuccessDanger(notifications.facebook, 'btn')", ng-model="notifications.facebook", ng-change="changeNotifications()" btn-checkbox="")
+          | Facebook&nbsp;
+          span.fa(ng-class="boolCheckTimes(notifications.facebook)")
+        label.btn(ng-class="boolSuccessDanger(notifications.slack, 'btn')", ng-model="notifications.slack", ng-change="changeNotifications()" btn-checkbox="")
+          | Slack&nbsp;
+          span.fa(ng-class="boolCheckTimes(notifications.slack)")
+        label.btn(ng-class="boolSuccessDanger(notifications.email, 'btn')", ng-model="notifications.email", ng-change="changeNotifications()" btn-checkbox="")
+          | Email&nbsp;
+          span.fa(ng-class="boolCheckTimes(notifications.email)")
+    br
+    .row: .col-xs-12
+      h2 Username Linking
+      .row
+        .col-sm-6
+          h3 TeamSpeak
+          ul.list-group
+            li.list-group-item(ng-repeat="username in usernames.teamspeak.names")
+              | {{ username }}
+              button.btn.btn-sm.btn-danger.pull-right(ng-click="removeUsername(usernames.teamspeak, username)", style="margin-top: -5px")
+                span.fa.fa-times
+            li.list-group-item
+              form.input-group
+                input.form-control(ng-model="usernames.teamspeak.add", placeholder="Username", style="height: 30px")
                 span.input-group-btn
-                  button.btn.btn-primary(ng-click="addUsername(minecraft)")
-                    | Add&nbsp;
+                  button.btn.btn-sm.btn-primary(ng-click="addUsername(usernames.teamspeak)")
                     span.fa.fa-plus
+        .col-sm-6
+          h3 Minecraft
+          ul.list-group
+            li.list-group-item(ng-repeat="username in usernames.minecraft.names")
+              | {{ username }}
+              button.btn.btn-sm.btn-danger.pull-right(ng-click="removeUsername(usernames.minecraft, username)", style="margin-top: -5px")
+                span.fa.fa-times
+            li.list-group-item
+              form.input-group
+                  input.form-control(ng-model="usernames.minecraft.add", placeholder="Username", style="height: 30px")
+                  span.input-group-btn
+                    button.btn.btn-sm.btn-primary(ng-click="addUsername(usernames.minecraft)")
+                      span.fa.fa-plus

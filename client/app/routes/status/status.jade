@@ -16,7 +16,7 @@
                   span.fa.fa-circle(ng-class="{\
                     online: user.online && !user.away,\
                     away: user.away\
-                  }")&nbsp;
+                  }") &nbsp;
                   | {{ user.name }}
                 li.list-group-item(ng-if="channel.users.length === 0")
                   | No users in channel
@@ -48,7 +48,7 @@
             | Users
           ul.list-group
             li.list-group-item(ng-repeat="user in minecraft.data.player_")
-              span.fa.fa-circle.online&nbsp;
+              span.fa.fa-circle.online &nbsp;
               | {{ user }}
             li.list-group-item(ng-show="minecraft.data.player_.length === 0")
               | No players currently on

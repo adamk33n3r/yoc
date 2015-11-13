@@ -23,12 +23,24 @@ var UserSchema = new Schema({
     notifications: {
       facebook: {
         type: Boolean,
+        default: false
+      },
+      slack: {
+        type: Boolean,
         default: true
       },
       email: {
         type: Boolean,
         default: false
       }
+    },
+    usernames: {
+      teamspeak: [{
+        type: String
+      }],
+      minecraft: [{
+        type: String
+      }]
     }
   }
 });
