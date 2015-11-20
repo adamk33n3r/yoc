@@ -39,6 +39,21 @@ function saveUpdates(updates) {
   };
 }
 
+exports.getAll = function(req, res) {
+  User.findAsync()
+    .then(handleEntityNotFound(res))
+    .then(function (users) {
+      var usernames = users.map(function (user) {
+        return {
+          name: user.name.full,
+          usernames: user.settings.usernames
+        };
+      });
+      res.json(usernames);
+    })
+    .catch(handleError(res));
+};
+
 exports.get = function(req, res) {
   User.findOneAsync({ 'facebook.id': req.params.id })
     .then(handleEntityNotFound(res))

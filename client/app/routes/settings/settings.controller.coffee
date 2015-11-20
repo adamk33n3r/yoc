@@ -15,7 +15,7 @@ angular.module 'yocApp'
       add: ''
       names: []
 
-  $scope.$on 'loggedin', (_, id) ->
+  setup = (id) ->
     notifPromise = Settings.notifications.get
       id: id
     .$promise.then (notifications) ->
@@ -30,6 +30,12 @@ angular.module 'yocApp'
     .then ->
       $scope.$apply ->
         $scope.loaded = true
+
+  if $scope.user_id?
+    setup $scope.user_id
+  else
+    $scope.$on 'loggedin', (_, id) ->
+      setup id
 
   $scope.changeNotifications = ->
     Settings.notifications.save { id: $scope.user_id }, $scope.notifications

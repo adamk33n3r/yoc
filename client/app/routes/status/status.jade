@@ -17,10 +17,11 @@
                     online: user.online && !user.away,\
                     away: user.away\
                   }") &nbsp;
-                  | {{ user.name }}
+                  span(ng-if="user.realname") {{ user.realname }}
+                  span(ng-if="!user.realname") {{ user.name }}
                 li.list-group-item(ng-if="channel.users.length === 0")
                   | No users in channel
-            li
+            li.hidden
               h3: em Offline
               ul.list-group
                 li.list-group-item(ng-repeat="user in teamspeak.offlineUsers")

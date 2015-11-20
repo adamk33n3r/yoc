@@ -9,6 +9,7 @@ var router = express.Router();
 router.get('/:id/notifications', notifications.get);
 router.post('/:id/notifications', notifications.set);
 
+router.get('/usernames', usernames.getAll);
 router.get('/:id/usernames', usernames.get);
 router.post('/:id/usernames', usernames.set);
 

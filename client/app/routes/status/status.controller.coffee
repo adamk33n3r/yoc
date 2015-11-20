@@ -1,13 +1,20 @@
 'use strict'
 
 angular.module 'yocApp'
-.controller 'StatusCtrl', ($scope, Status) ->
+.controller 'StatusCtrl', ($scope, Status, Settings) ->
   $scope.teamspeak =
     online: false
     loaded: false
   $scope.minecraft =
     online: false
     loaded: false
+
+  Settings.allUsernames.query()
+  .$promise.then (usernames) ->
+    console.log usernames
+    $scope.usernames = usernames
+    $scope.teamspeakRefresh()
+    $scope.minecraftRefresh()
 
   $scope.boolClass = (obj, classPrefix) ->
     return classPrefix + if obj then '-success' else '-danger'
@@ -18,10 +25,13 @@ angular.module 'yocApp'
     $scope[serverName + 'Refresh']()
 
   $scope.teamspeakRefresh = ->
-    Status.teamspeak $scope
+    Status.teamspeak $scope.usernames
+    .then (data) ->
+      $scope.teamspeak.loaded = true
+      $scope.teamspeak.online = true
+      $scope.teamspeak.channels = data.channels
+      $scope.teamspeak.offlineUsers = data.offlineUsers
 
   $scope.minecraftRefresh = ->
     Status.minecraft $scope
 
-  $scope.teamspeakRefresh()
-  $scope.minecraftRefresh()

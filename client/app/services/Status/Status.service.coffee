@@ -2,12 +2,11 @@
 
 angular.module 'yocApp'
 .factory 'Status', ($http) ->
-  teamspeak: ($scope) ->
+  teamspeak: (usernames) ->
     $http.get '/api/services/teamspeak/status'
-    .success (result) ->
-      $scope.teamspeak.loaded = true
-      $scope.teamspeak.online = true
-      $scope.teamspeak.offlineUsers = []
+    .then (result) ->
+      channels = []
+      offlineUsers = []
 
       # Build online users
       users = ({
@@ -15,7 +14,7 @@ angular.module 'yocApp'
         away: client.client_away,
         online: true,
         cid: client.cid
-      } for client in result.data.online)
+      } for client in result.data.data.online)
 
       # Sort alphabetically
       users.sort (a, b) ->
@@ -37,24 +36,35 @@ angular.module 'yocApp'
           return 0
 
       # Attach to correct channel
-      for channel in result.data.channels
-        channel.users = (client for client in users when client.cid is channel.cid)
-      $scope.teamspeak.channels = result.data.channels
+      for channel in result.data.data.channels
+        channel.users = []
+        for client in users when client.cid is channel.cid
+          for username in usernames
+            idx = username.usernames.teamspeak.indexOf client.name
+            if idx >= 0
+              client.realname = username.name
+              break
+          channel.users.push client
+      channels = result.data.data.channels
 
       # Get offline clients whithout dupes
       onlineNames = users.map (ele) ->
         return ele.name
       offlineNames = []
-      for client in result.data.clients
+      for client in result.data.data.clients
         if client.client_nickname not in onlineNames and client.client_nickname not in offlineNames
           offlineNames.push client.client_nickname
-          $scope.teamspeak.offlineUsers.push
+          offlineUsers.push
             name: client.client_nickname
             away: false
             online: false
 
+      return {
+        channels
+        offlineUsers
+      }
+
     .catch (error) ->
-      $scope.teamspeak.loaded = true
       console.error "Couldn't connect to teamspeak server"
       console.error error
 
@@ -66,4 +76,5 @@ angular.module 'yocApp'
       $scope.minecraft.data = result
     .catch (error) ->
       $scope.minecraft.loaded = true
-      console.error error
+      $scope.minecraft.online = false
+      # console.error error
