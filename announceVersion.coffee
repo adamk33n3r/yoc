@@ -3,6 +3,9 @@ version = require './package.json'
 .version
 
 process.env.NODE_ENV = 'development'
+localConfig = require './server/config/local.env'
+for key, val of localConfig
+  process.env[key] = val
 webhook = require './server/config/environment'
 .slack.webhook
 
