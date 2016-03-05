@@ -409,6 +409,7 @@ module.exports = function (grunt) {
           cwd: '<%= yeoman.client %>',
           dest: '<%= yeoman.dist %>/client',
           src: [
+            'yocraft.json',
             '*.{ico,png,txt}',
             '.htaccess',
             'bower_components/**/*',
