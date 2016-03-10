@@ -18,7 +18,7 @@ Minecraft.prototype.connect = function () {
       }
     }.bind(this));
   }.bind(this));
-}
+};
 
 Minecraft.prototype.status = function () {
   return new Promise(function (fulfill, reject) {
@@ -34,10 +34,10 @@ Minecraft.prototype.status = function () {
       });
     }
   }.bind(this));
-}
+};
 
 Minecraft.prototype.close = function() {
   this.query.close();
-}
+};
 
 module.exports = Minecraft;

@@ -17,7 +17,7 @@ var TeamSpeak = function (url, onError) {
             onError(error);
         }
     });
-}
+};
 
 TeamSpeak.prototype.login = function (username, password) {
     ths = this;
@@ -34,26 +34,26 @@ TeamSpeak.prototype.getClients = function () {
     return this.client.send('clientdblist')
         .then(handleResponse)
         .then(stripQueryClients);
-}
+};
 
 TeamSpeak.prototype.getOnlineClients = function () {
     return this.client.send('clientlist', {}, ['away'])
         .then(handleResponse)
         .then(stripQueryClients);
-}
+};
 
 TeamSpeak.prototype.getChannel = function (id) {
     return this.client.send('channelinfo', { cid: id })
         .then(handleResponse);
-}
+};
 
 TeamSpeak.prototype.getChannels = function () {
     return this.client.send('channellist')
         .then(handleResponse);
-}
+};
 
 TeamSpeak.prototype.close = function () {
     return this.client.send('quit');
-}
+};
 
 module.exports = TeamSpeak;

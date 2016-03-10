@@ -30,12 +30,20 @@ var ts_status = function (req, res) {
   .then(function() {
     ts.getOnlineClients()
     .then(function(onlineClients) {
+      connectURL = '<ts3server://ts.adam-keenan.net|Click here to connect!>\n';
       if (onlineClients.length > 0) {
-        res.send(onlineClients.map(function (ele) {
-          return ele.client_nickname;
-        }).join(', '));
+        res.send({
+          response_type: 'ephemeral',
+          text: connectURL +
+            onlineClients.map(function (ele) {
+              return ele.client_nickname;
+            }).join(', ')
+        });
       } else {
-        res.send('No one is online at the moment');
+        res.send({
+          response_type: 'ephemeral',
+          text: connectURL + 'No one is online at the moment'
+        });
       }
       ts.close();
     })
