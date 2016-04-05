@@ -1,3 +1,5 @@
+'use strict';
+
 var config = require('../../../config/environment');
 var Slack = require('../../../services/slack');
 var TeamSpeak = require('../../../services/teamspeak');
@@ -30,11 +32,11 @@ var ts_status = function (req, res) {
   .then(function() {
     ts.getOnlineClients()
     .then(function(onlineClients) {
-      connectURL = '<ts3server://ts.adam-keenan.net|Click here to connect!>\n';
+      var connectURL = 'TeamSpeak Server\n<ts3server://ts.adam-keenan.net|Click here to connect!>\n';
       if (onlineClients.length > 0) {
         res.send({
           response_type: 'ephemeral',
-          text: connectURL +
+          text: connectURL + 'Online users: ' +
             onlineClients.map(function (ele) {
               return ele.client_nickname;
             }).join(', ')
@@ -60,11 +62,18 @@ var mc_status = function (req, res) {
   var mc = new Minecraft(config.minecraft.host, config.minecraft.port);
   mc.connect().then(function () {
     mc.status().then(function (stat) {
-      var players = stat.data.player_;
+      var connectURL = 'YOCraft Minecraft Server\n<http://technicpack.net/modpack/ye-olde-chums.744666|Click here to play our modpack!>\n';
+      var players = stat.player_;
       if (players.length > 0) {
-        res.send(players.join(', '));
+        res.send({
+            response_type: 'ephemeral',
+            text: connectURL + 'Online users: ' + players.join(', ')
+        });
       } else {
-        res.send('No one is online at the moment');
+        res.send({
+            response_type: 'ephemeral',
+            text: connectURL + 'No one is online at the moment'
+        });
       }
     });
   }).catch(function (err) {
