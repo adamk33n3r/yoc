@@ -1,6 +1,6 @@
 angular.module('config', [])
 
-.constant('version', '1.6.0')
+.constant('version', '1.7.0')
 
 .constant('env', 'development')
 

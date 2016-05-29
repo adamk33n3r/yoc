@@ -41,6 +41,7 @@
       <!-- bower:css -->
       <link rel="stylesheet" href="bower_components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css" />
       <link rel="stylesheet" href="bower_components/ui-select/dist/select.css" />
+      <link rel="stylesheet" href="bower_components/videogular-themes-default/videogular.css" />
       <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css({.tmp,client}) app/app.css -->
@@ -86,10 +87,12 @@
       <script src="bower_components/angular-resource/angular-resource.js"></script>
       <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
       <script src="bower_components/angular-socket-io/socket.js"></script>
-      <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
       <script src="bower_components/lodash/dist/lodash.compat.js"></script>
       <script src="bower_components/ng-facebook/ngFacebook.js"></script>
       <script src="bower_components/ui-select/dist/select.js"></script>
+      <script src="bower_components/videogular/videogular.js"></script>
+      <script src="bower_components/videogular-controls/vg-controls.js"></script>
+      <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
       <!-- endbower -->
       <script src="socket.io-client/socket.io.js"></script>
     <!-- endbuild -->
@@ -102,13 +105,15 @@
           <!-- injector:js -->
           <script src="app/admin/admin.js"></script>
           <script src="app/main/main.js"></script>
+          <script src="app/routes/games/games.js"></script>
           <script src="app/routes/settings/settings.js"></script>
           <script src="app/routes/status/status.js"></script>
           <script src="app/routes/stream/stream.js"></script>
           <script src="app/services/Facebook/Facebook.js"></script>
-          <script src="app/services/Game/Game.js"></script>
+          <script src="app/services/Highlight/Highlight.js"></script>
           <script src="app/services/Settings/Settings.js"></script>
           <script src="app/services/Slack/Slack.js"></script>
+          <script src="app/services/Stats/Stats.js"></script>
           <script src="app/services/Status/Status.js"></script>
           <script src="components/auth/auth.js"></script>
           <script src="components/auth/user.js"></script>

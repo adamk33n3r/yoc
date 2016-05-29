@@ -9,9 +9,12 @@ angular.module 'yocApp'
       method: 'PUT'
       params:
         controller: 'password'
-
     get:
       method: 'GET'
       params:
         id: 'me'
+    addHighlight:
+      method: 'POST'
+      params:
+        controller: 'highlight'
 

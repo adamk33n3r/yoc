@@ -11,6 +11,9 @@ angular.module 'yocApp'
   ,
     title: 'Stream'
     state: 'stream'
+  ,
+    title: 'Games'
+    state: 'games'
   ]
 
   $scope.isCollapsed = true

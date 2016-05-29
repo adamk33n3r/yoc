@@ -1,9 +1,12 @@
 'use strict';
 
+var _ = require('lodash');
 var User = require('./user.model');
 var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
+
+var exclusions = '-salt -hashedPassword';
 
 function validationError(res, statusCode) {
   statusCode = statusCode || 422;
@@ -26,12 +29,44 @@ function respondWith(res, statusCode) {
   };
 }
 
+function responseWithResult(res, statusCode) {
+  statusCode = statusCode || 200;
+  return function(entity) {
+    if (entity) {
+      res.status(statusCode).json(entity);
+    }
+  };
+}
+
+function handleEntityNotFound(res) {
+  return function(entity) {
+    if (!entity) {
+      res.status(404).end();
+      return null;
+    }
+    return entity;
+  };
+}
+
+function saveUpdates(updates) {
+  return function(entity) {
+    var updated = _.merge(entity, updates);
+    return updated.saveAsync()
+      .spread(function(updated) {
+        return updated;
+      });
+  };
+}
+
 /**
  * Get list of users
  * restriction: 'admin'
  */
 exports.index = function(req, res) {
-  User.findAsync({}, '-salt -hashedPassword')
+  if (!req.query.highlights) {
+    exclusions += ' -highlights';
+  }
+  User.findAsync({ role: 'user', 'name.first': { $ne: 'Test' }, 'name.last': { $ne: 'User' } }, exclusions)
     .then(function(users) {
       res.status(200).json(users);
     })
@@ -131,4 +166,18 @@ exports.me = function(req, res, next) {
  */
 exports.authCallback = function(req, res, next) {
   res.redirect('/');
+};
+
+exports.addHighlight = function (req, res, next) {
+  var userId = req.params.id;
+
+  User.findByIdAsync(req.params.id)
+    .then(handleEntityNotFound(res))
+    .then(function (user) {
+      user.highlights.push(req.body.highlight);
+      return user;
+    })
+    .then(saveUpdates({}))
+    .then(responseWithResult(res))
+    .catch(handleError(res));
 };

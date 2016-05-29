@@ -10,6 +10,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 process.on('uncaughtException', function (err) {
   console.error("!!!!!Uncaught Exception!!!!!");
   console.error(err);
+  console.error(err.prototype);
 });
 
 var express = require('express');

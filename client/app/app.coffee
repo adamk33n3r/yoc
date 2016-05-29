@@ -96,6 +96,10 @@ angular.module 'yocApp', [
 
     $q.reject response
 
+.filter 'trusted', ($sce) ->
+  return (url) ->
+    return $sce.trustAsResourceUrl url
+
 .run ($rootScope, $state, $location, Auth) ->
   # Redirect to login if route requires auth and you're not logged in
   $rootScope.$on '$stateChangeStart', (event, next) ->

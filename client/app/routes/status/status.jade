@@ -2,7 +2,7 @@
   .panel(ng-class="boolClass(teamspeak.online, 'panel')")
     .panel-heading: h2.panel-title
       span.fa.fa-server &nbsp;
-      | TeamSpeak
+      span TeamSpeak
       button.btn.pull-right(ng-class="boolClass(teamspeak.online, 'btn')", ng-click="refresh('teamspeak')", ng-disabled="!teamspeak.loaded")
         span.fa.fa-refresh(ng-class="{ 'fa-spin': !teamspeak.loaded }")
     .panel-body
@@ -38,7 +38,7 @@
   .panel(ng-class="boolClass(minecraft.online, 'panel')")
     .panel-heading: h2.panel-title
       span.fa.fa-server &nbsp;
-      | Minecraft
+      span Minecraft
       button.btn.pull-right(ng-class="boolClass(minecraft.online, 'btn')", ng-click="refresh('minecraft')", ng-disabled="!minecraft.loaded")
         span.fa.fa-refresh(ng-class="{ 'fa-spin': !minecraft.loaded }")
     .panel-body

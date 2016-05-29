@@ -42,8 +42,19 @@ var UserSchema = new Schema({
         type: String
       }]
     }
-  }
-});
+  },
+  highlights: [{
+    _id: false,
+    title: {
+      type: String,
+      required: true
+    },
+    name: {
+      type: String,
+      required: true
+    }
+  }]
+}, { toJSON: { virtuals: true } });
 
 /**
  * Virtuals

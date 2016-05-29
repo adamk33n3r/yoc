@@ -1,0 +1,64 @@
+.container
+  .panel.panel-default
+    .panel-heading: h2.panel-title
+      span.fa.fa-gamepad &nbsp;
+      span.overwatch-font-oblique Overwatch Highlights
+      button.btn.btn-default.pull-right(ng-click="refresh('overwatch')", ng-disabled="!overwatch.loaded")
+        span.fa.fa-refresh(ng-class="{ 'fa-spin': !rocketleague.loaded }")
+    .panel-body
+      .row
+        .col-xs-offset-1.col-xs-10
+          .row
+            ul.list-unstyled.col-xs-12
+              li(ng-repeat="user in usersWithHighlights")
+                h1.overwatch-font.italic.bold {{ user.name.full }}
+                .well.row(ng-repeat="highlight in user.highlights"): .col-xs-12
+                  h2.overwatch-font.italic.bold
+                    | {{ highlight.title }} -&nbsp;
+                    a(href="https://gfycat.com/{{ highlight.name }}", target="_blank") Gfycat Link
+                  video.full-width(loop)
+                    source(ng-src="{{ 'https://giant.gfycat.com/' + highlight.name + '.webm' | trusted }}", type="video/webm")
+          .row: .col-xs-12
+            form(name="highlightForm")
+              .row
+                .form-group.col-xs-12
+                  label.overwatch-font(for="title") Title
+                  input#title.form-control(ng-model="overwatch.highlight.title", placeholder="Title", required)
+              .row
+                .form-group.col-sm-6
+                  label.overwatch-font(for="name") Name
+                  input#name.form-control(ng-model="overwatch.highlight.name", placeholder="https://gfycat.com/(ThisPart)", required)
+                .form-group.col-sm-6
+                  label.overwatch-font(for="user") User
+                  select#user.form-control(ng-model="overwatch.highlight.user", ng-options="user as user.name.full for user in users track by user.id", required)
+                    option(value="") Select...
+              .row: .col-xs-12
+                button.btn.btn-primary.pull-right(type="button", ng-click="addHighlight(overwatch.highlight)", ng-disabled="addingHighlight || highlightForm.$invalid")
+                  span.fa.fa-plus
+                  | Add Highlight
+  .panel.panel-default
+    .panel-heading: h2.panel-title
+      span.fa.fa-gamepad &nbsp;
+      span Rocket League
+      button.btn.btn-default.pull-right(ng-click="refresh('rocketleague')", ng-disabled="!rocketleague.loaded || true")
+        span.fa.fa-refresh(ng-class="{ 'fa-spin': !rocketleague.loaded }")
+    .panel-body
+      .row(ng-show="rocketleague.loaded")
+        .col-sm-offset-1.col-sm-10
+          ul.list-unstyled
+            li(ng-repeat="(user, stats) in rocketleague.users")
+              .well
+                .row
+                  .col-sm-6
+                    h2 {{ stats.name }}
+                    h3 Duel
+                    h3 Doubles
+                    h3 Solo Standard
+                    h3 Standard
+                  .col-sm-6
+                    ul.list-group
+                      li.list-group-item(ng-repeat="(name, stat) in stats.stats")
+                        span {{ name }}:
+                        span.pull-right {{ stat }}
+                .row
+                  .col-sm-12: img.img-thumbnail.full-width(ng-src="http://signature.rocketleaguestats.com/normal/steam/{{ user }}.png")
