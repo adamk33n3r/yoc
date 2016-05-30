@@ -11,7 +11,8 @@
           .row
             ul.list-unstyled.col-xs-12
               li(ng-repeat="user in usersWithHighlights")
-                h1.overwatch-font.italic.bold {{ user.name.full }}
+                h1.overwatch-font.italic.bold(id="{{ user.name.full }}")
+                  a(ng-href="/games#{{ user.name.full }}") {{ user.name.full }}
                 .well.row(ng-repeat="highlight in user.highlights"): .col-xs-12
                   h2.overwatch-font.italic.bold
                     | {{ highlight.title }} -&nbsp;
