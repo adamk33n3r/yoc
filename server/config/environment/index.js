@@ -78,6 +78,11 @@ var all = {
   facebook: {
     id: requiredProcessEnv('FACEBOOK_ID'),
     secret: requiredProcessEnv('FACEBOOK_SECRET')
+  },
+
+  // Steam
+  steam: {
+      token: requiredProcessEnv('STEAM_TOKEN')
   }
 };
 
