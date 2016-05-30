@@ -54,6 +54,6 @@ angular.module 'yocApp'
     if game is 'overwatch'
       loadOverwatch()
 
-  angular.element(document.body).on 'click', (evnt) ->
+  angular.element(document.body).on 'click', 'video', (evnt) ->
     ele = evnt.target
     if ele.paused then ele.play() else ele.pause()
