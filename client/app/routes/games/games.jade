@@ -10,7 +10,7 @@
         .col-xs-offset-1.col-xs-10
           .row
             ul.list-unstyled.col-xs-12
-              li(ng-repeat="user in usersWithHighlights")
+              li(ng-repeat="user in usersWithHighlights | orderBy: 'name.full'")
                 h1.overwatch-font.italic.bold(id="{{ user.name.full }}")
                   a(ng-href="/games#{{ user.name.full }}") {{ user.name.full }}
                 .well.row(ng-repeat="highlight in user.highlights | orderBy: 'created_at'"): .col-xs-12
