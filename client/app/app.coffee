@@ -9,6 +9,7 @@ angular.module 'yocApp', [
   'ui.bootstrap',
   'ngFacebook',
   'ui.select',
+  'ui.validate',
   'ui.bootstrap.datetimepicker',
   'angularMoment',
   'config'
