@@ -35,6 +35,14 @@ angular.module 'yocApp'
     .$promise.then (response) ->
       $state.reload()
 
+  $scope.validateName = (value) ->
+    partA = value.startsWith 'https://'
+    partB = value.match /[^a-zA-Z]/
+    return not (partA or partB)
+
+  $scope.log = (thing) ->
+    console.log thing
+
   Stats.rocketleague(uid)
   .then (stats) ->
     $scope.rocketleague.loaded = true

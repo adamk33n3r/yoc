@@ -13,7 +13,7 @@
               li(ng-repeat="user in usersWithHighlights")
                 h1.overwatch-font.italic.bold(id="{{ user.name.full }}")
                   a(ng-href="/games#{{ user.name.full }}") {{ user.name.full }}
-                .well.row(ng-repeat="highlight in user.highlights"): .col-xs-12
+                .well.row(ng-repeat="highlight in user.highlights | orderBy: 'created_at'"): .col-xs-12
                   h2.overwatch-font.italic.bold
                     | {{ highlight.title }} -&nbsp;
                     a(href="https://gfycat.com/{{ highlight.name }}", target="_blank") Gfycat Link
@@ -24,14 +24,15 @@
               .row
                 .form-group.col-xs-12
                   label.overwatch-font(for="title") Title
-                  input#title.form-control(ng-model="overwatch.highlight.title", placeholder="Title", required)
+                  input#title.form-control(name="name", ng-model="overwatch.highlight.title", placeholder="Title", required)
               .row
-                .form-group.col-sm-6
+                .form-group.col-sm-6(ng-class="{ 'has-error': highlightForm.name.$invalid && highlightForm.name.$dirty }")
                   label.overwatch-font(for="name") Name
-                  input#name.form-control(ng-model="overwatch.highlight.name", placeholder="https://gfycat.com/(ThisPart)", required)
+                  input#name.form-control(name="name", ng-model="overwatch.highlight.name", ui-validate="'validateName($value)'", placeholder="https://gfycat.com/(ThisPart)", required)
+                  span.help-block(ng-show="highlightForm.name.$invalid && highlightForm.name.$dirty") Name invalid. Sure it's just the word part of the gfycat?
                 .form-group.col-sm-6
                   label.overwatch-font(for="user") User
-                  select#user.form-control(ng-model="overwatch.highlight.user", ng-options="user as user.name.full for user in users track by user.id", required)
+                  select#user.form-control(name="user", ng-model="overwatch.highlight.user", ng-options="user as user.name.full for user in users track by user.id", required)
                     option(value="") Select...
               .row: .col-xs-12
                 button.btn.btn-primary.pull-right(type="button", ng-click="addHighlight(overwatch.highlight)", ng-disabled="addingHighlight || highlightForm.$invalid")
