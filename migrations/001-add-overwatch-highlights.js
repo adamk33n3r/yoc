@@ -35,7 +35,6 @@ exports.up = function(next){
 };
 
 exports.down = function(next){
-  console.log('down');
   mongoose.connect(config.mongo.uri, { db: { safe: true } });
   Promise.all([
     User.findOneAsync({ email: 'adamk33n3r@gmail.com' }).then(function (user) {
