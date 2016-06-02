@@ -45,16 +45,22 @@ module.exports = function(socketio) {
       socket.handshake.address.address + ':' + socket.handshake.address.port :
       process.env.DOMAIN;
 
+    socket.address = socket.handshake.headers['x-real-ip'] + ':' + socket.handshake.headers['x-real-port'];
+
     socket.connectedAt = new Date();
 
     // Call onDisconnect.
     socket.on('disconnect', function() {
       onDisconnect(socket);
-      // console.info('[%s] DISCONNECTED', socket.address);
+      console.info('[%s] DISCONNECTED', socket.address);
     });
 
     // Call onConnect.
     onConnect(socket);
-    // console.info('[%s] CONNECTED', socket.address);
+    console.info('[%s] CONNECTED', socket.address);
+
+    socket.on('chat', function (msg) {
+      socketio.emit('chat', msg);
+    });
   });
 };

@@ -1,0 +1,4 @@
+input.form-control(type="text", ng-model="text", ng-keypress="sendChat($event.keyCode)")
+table.table.table-striped: tbody
+  tr(ng-repeat="message in messages | orderBy: '$index': true track by $index")
+    td {{ message }}
