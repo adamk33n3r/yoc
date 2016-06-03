@@ -8,6 +8,9 @@ exports.up = function(next){
   mongoose.connect(config.mongo.uri, { db: { safe: true } });
   User.findAsync().then(function (users) {
     Promise.all(users.map(function (user) {
+      user.highlights.forEach(function (highlight) {
+        highlight._id = new mongoose.Types.ObjectId();
+      });
       return user.saveAsync();
     })).then(function () {
       mongoose.disconnect();

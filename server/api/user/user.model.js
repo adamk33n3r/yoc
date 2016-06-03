@@ -44,7 +44,6 @@ var UserSchema = new Schema({
     }
   },
   highlights: [{
-    _id: false,
     title: {
       type: String,
       required: true

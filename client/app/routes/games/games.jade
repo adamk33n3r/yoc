@@ -11,11 +11,12 @@
           .row
             ul.list-unstyled.col-xs-12
               li(ng-repeat="user in usersWithHighlights | orderBy: 'name.full'")
-                h1.overwatch-font.italic.bold(id="{{ user.name.full }}")
-                  a(ng-href="/games#{{ user.name.full }}") {{ user.name.full }}
+                h1.overwatch-font.italic.bold(id="{{ user.id }}")
+                  a(ng-href="/games#{{ user.id }}") {{ user.name.full }}
                 .well.row(ng-repeat="highlight in user.highlights | orderBy: 'created_at'"): .col-xs-12
-                  h2.overwatch-font.italic.bold
-                    | {{ highlight.title }} -&nbsp;
+                  h2.overwatch-font.italic.bold(id="{{ highlight.id }}")
+                    a(href="/games#{{ highlight.id }}") {{ highlight.title }}&nbsp;
+                    | -&nbsp;
                     a(href="https://gfycat.com/{{ highlight.name }}", target="_blank") Gfycat Link
                   video.full-width(loop)
                     source(ng-src="{{ 'https://giant.gfycat.com/' + highlight.name + '.webm' | trusted }}", type="video/webm")

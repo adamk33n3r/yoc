@@ -1,7 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose-bird')();
-var config = require('../server/config/environment/' + process.env.NODE_ENV);
+var config = require('../server/config/environment/' + (process.env.NODE_ENV || 'development'));
 var User = require('../server/api/user/user.model');
 
 exports.up = function(next){

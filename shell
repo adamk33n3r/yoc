@@ -43,3 +43,7 @@ glob("./server/api/**/*.model.js", { nosort: true }, function(err, files) {
     process.stdout.write('shell> ');
 
 });
+
+repl.context['log'] = function (thing) {
+    console.log(thing);
+}
