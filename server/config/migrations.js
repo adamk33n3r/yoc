@@ -7,7 +7,7 @@ module.exports = {
     db: process.env.MONGOHQ_URL || 'mongodb://localhost/yoc-dev'
   },
   production: {
-    schema: { 'migrations': {} },
+    schema: { 'migration': {} },
     modelName: 'Migration',
     db: process.env.MONGOHQ_URL || 'mongodb://localhost/yoc'
   }

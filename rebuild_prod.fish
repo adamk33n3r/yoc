@@ -1,4 +1,3 @@
 #!/usr/bin/fish
 
-grunt build
-forever restart dist/server
+git fetch; and git co origin/master; and grunt build; and forever restart dist/server
