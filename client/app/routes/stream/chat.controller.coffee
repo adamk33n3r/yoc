@@ -15,7 +15,7 @@ angular.module 'yocApp'
     $scope.messages.push text
 
   $scope.sendChat = (keyCode) ->
-    return if keyCode isnt 13
+    return if keyCode isnt 13 or $scope.text is ''
     user = $scope.user?.name
     user ?= 'Guest'
     socket.emit 'chat', "#{user}: #{$scope.text}"
