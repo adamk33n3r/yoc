@@ -4,6 +4,7 @@ angular.module 'yocApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
+  'ngAnimate',
   'btford.socket-io',
   'ui.router',
   'ui.bootstrap',
@@ -12,12 +13,12 @@ angular.module 'yocApp', [
   'ui.validate',
   'ui.bootstrap.datetimepicker',
   'angularMoment',
+  'ngStorage',
   'config'
 ]
 .config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $facebookProvider) ->
   $.get '/api/fb/get-token'
   .then (facebook) ->
-    console.log facebook
     $facebookProvider.setAppId facebook.id
     .setCustomInit
       xfbml: true
@@ -100,6 +101,13 @@ angular.module 'yocApp', [
 .filter 'trusted', ($sce) ->
   return (url) ->
     return $sce.trustAsResourceUrl url
+
+.filter 'time', () ->
+  return (timestamp) ->
+    date = new Date(timestamp)
+    hours = date.getHours()
+    minutes = '0' + date.getMinutes()
+    return "#{hours}:#{minutes.substr(-2)}"
 
 .run ($rootScope, $state, $location, Auth) ->
   # Redirect to login if route requires auth and you're not logged in
