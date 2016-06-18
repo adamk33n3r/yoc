@@ -93,3 +93,18 @@ exports.status = function (req, res) {
     res.status(500).send('Invalid service name');
   }
 };
+
+exports.roll = function (req, res) {
+    if (req.body.token !== 'LwPEBbxlGiNTXzXG7Ag92Efo') {
+        return res.status(404).send('asdf');
+    }
+    var sides = req.body.text.split(' ')[0];
+    if (!sides) {
+    } else {
+        var result = Math.floor(Math.random() * sides) + 1;
+        res.send({
+            response_type: 'in_channel',
+            text: result
+        });
+    }
+};
