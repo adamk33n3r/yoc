@@ -5,6 +5,16 @@ var Slack = require('../../../services/slack');
 var TeamSpeak = require('../../../services/teamspeak');
 var Minecraft = require('../../../services/minecraft');
 
+function checkToken(token, callback) {
+    return function (req, res) {
+        if (req.body.token !== token) {
+            res.status(404).send();
+        } else {
+            callback(req, res);
+        }
+    };
+}
+
 exports.send = function (req, res) {
   Slack.sendMessage(config.slack.webhook, {
     channel: req.body.channel || '#tcpi',
@@ -94,10 +104,7 @@ exports.status = function (req, res) {
   }
 };
 
-exports.roll = function (req, res) {
-    if (req.body.token !== 'LwPEBbxlGiNTXzXG7Ag92Efo') {
-        return res.status(404).send('asdf');
-    }
+exports.roll = checkToken('LwPEBbxlGiNTXzXG7Ag92Efo', function (req, res) {
     var sides = req.body.text.split(' ')[0];
     if (!sides) {
     } else {
@@ -107,4 +114,11 @@ exports.roll = function (req, res) {
             text: result
         });
     }
-};
+});
+
+exports.lenny = checkToken('HEiSGKnFX8aGHXezPxnER2Mg', function (req, res) {
+    res.send({
+        response_type: 'in_channel',
+        text: ' '
+    });
+});
