@@ -4,7 +4,7 @@ var config = require('../../../config/environment');
 exports.status = function (req, res) {
     Slack.sendMessage(config.slack.webhook, {
       channel: '#random',
-      text: 'Someone started streaming *' + (req.body.title ? req.body.title : 'something') + '*!\nCome join the party: https://yoc.adam-keenan.com/stream'
+      text: (req.body.who? req.body.who : 'Someone') +  ' started streaming *' + (req.body.title ? req.body.title : 'something') + '*!\nCome join the party: https://yoc.adam-keenan.com/stream'
     });
     res.send();
 };
