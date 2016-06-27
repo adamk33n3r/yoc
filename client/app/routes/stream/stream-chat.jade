@@ -5,4 +5,5 @@
         tr.message(ng-repeat="message in $storage.messages")
           td
             small {{ message.timestamp | time }}&nbsp;
-            span {{ message.user }}: {{ message.text }}
+            span {{ message.user }}:&nbsp;
+            span(ng-bind-html="message.text")

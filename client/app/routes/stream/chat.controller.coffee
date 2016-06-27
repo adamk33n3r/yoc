@@ -17,8 +17,11 @@ angular.module 'yocApp'
     path: '/socket.io-client'
 
   socket = socketFactory ioSocket: ioSocket
-  socket.on 'chat', (text) ->
-    $scope.$storage.messages.unshift text
+  socket.on 'chat', (message) ->
+    links = message.text.match /https?:\/\/\S+/ig
+    for link in links or []
+      message.text = message.text.replace link, "<a target=\"_blank\" href=\"#{link}\">#{link}</a>"
+    $scope.$storage.messages.unshift message
 
   $scope.sendChat = (evnt) ->
     return if evnt.keyCode isnt 13 or $scope.text is ''

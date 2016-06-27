@@ -22,7 +22,7 @@ angular.module 'yocApp'
     aspectratio: '16:9'
     hlshtml: true
     primary: 'html5'
-    autostart: true
+    autostart: window.location.hostname is 'yoc.adam-keenan.com'
     skin:
       name: 'glow'
     logo:
