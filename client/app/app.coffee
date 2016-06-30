@@ -98,9 +98,13 @@ angular.module 'yocApp', [
 
     $q.reject response
 
-.filter 'trusted', ($sce) ->
+.filter 'trustedResource', ($sce) ->
   return (url) ->
     return $sce.trustAsResourceUrl url
+
+.filter 'trustedHtml', ($sce) ->
+  return (html) ->
+    return $sce.trustAsHtml html
 
 .filter 'time', () ->
   return (timestamp) ->

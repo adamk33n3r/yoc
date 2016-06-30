@@ -19,7 +19,7 @@
                     | -&nbsp;
                     a(href="https://gfycat.com/{{ highlight.name }}", target="_blank") Gfycat Link
                   video.full-width(loop)
-                    source(ng-src="{{ 'https://giant.gfycat.com/' + highlight.name + '.webm' | trusted }}", type="video/webm")
+                    source(ng-src="{{ 'https://giant.gfycat.com/' + highlight.name + '.webm' | trustedResource }}", type="video/webm")
           .row: .col-xs-12
             form(name="highlightForm")
               .row

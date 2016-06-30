@@ -6,4 +6,4 @@
           td
             small {{ message.timestamp | time }}&nbsp;
             span {{ message.user }}:&nbsp;
-            span(ng-bind-html="message.text")
+            span(ng-bind-html="message.text | trustedHtml")

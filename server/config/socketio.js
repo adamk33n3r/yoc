@@ -7,7 +7,8 @@
 var config = require('./environment');
 
 // When the user disconnects.. perform this
-function onDisconnect(socket) {
+function onDisconnect(socketio, socket) {
+    socketio.emit('chat:disconnect', socket);
 }
 
 // When the user connects.. perform this
@@ -51,7 +52,7 @@ module.exports = function(socketio) {
 
     // Call onDisconnect.
     socket.on('disconnect', function() {
-      onDisconnect(socket);
+      onDisconnect(socketio, socket);
       console.info('[%s] DISCONNECTED', socket.address);
     });
 
@@ -59,8 +60,13 @@ module.exports = function(socketio) {
     onConnect(socket);
     console.info('[%s] CONNECTED', socket.address);
 
-    socket.on('chat', function (msg) {
-      socketio.emit('chat', msg);
+    socket.on('chat:connect', function (usr) {
+        console.log('client connect', usr);
+      socketio.emit('chat:connect', usr);
+    });
+    socket.on('chat:msg', function (msg) {
+        console.log(msg);
+      socketio.emit('chat:msg', msg);
     });
   });
 };
