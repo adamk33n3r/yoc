@@ -10,8 +10,7 @@ angular.module 'yocApp'
   $scope.$storage.messages = $scope.$storage.messages.filter (message) ->
     return (now - message.timestamp) < (24 * 60 * 60 * 1000)
   guestNumber = Math.floor(Math.random() * 10000)
-  user = $scope.user?.name
-  user ?= 'Guest#' + guestNumber
+  user = null
 
   ioSocket = io
     # Send auth token on connection, you will need to DI the Auth service above
@@ -32,6 +31,9 @@ angular.module 'yocApp'
 
   $scope.sendChat = (evnt) ->
     return if evnt.keyCode isnt 13 or $scope.text is ''
+    if not user?
+      user = $scope.user?.name
+      user ?= 'Guest#' + guestNumber
     socket.emit 'chat:msg',
       user: user
       text: $scope.text
