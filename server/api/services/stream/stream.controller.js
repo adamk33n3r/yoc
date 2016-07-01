@@ -5,7 +5,7 @@ exports.status = function (socketio) {
   return function (req, res) {
     if (req.body.call === 'publish') {
       Slack.sendMessage(config.slack.webhook, {
-        channel: '#tcpi',
+        channel: '#random',
         text: (req.body.who? req.body.who : 'Someone') +  ' started streaming *' + (req.body.title ? req.body.title : 'something') + '*!\nCome join the party: https://yoc.adam-keenan.com/stream'
       });
     } else if (req.body.call === 'play') {
