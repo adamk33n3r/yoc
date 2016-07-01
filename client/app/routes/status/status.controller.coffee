@@ -5,6 +5,9 @@ angular.module 'yocApp'
   $scope.teamspeak =
     online: false
     loaded: false
+  $scope.steam =
+    online: false
+    loaded: false
   $scope.minecraft =
     online: false
     loaded: false
@@ -15,6 +18,8 @@ angular.module 'yocApp'
     $scope.usernames = usernames
     $scope.teamspeakRefresh()
     $scope.minecraftRefresh()
+
+  Status.steam()
 
   $scope.boolClass = (obj, classPrefix) ->
     return classPrefix + if obj then '-success' else '-danger'

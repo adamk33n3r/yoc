@@ -35,6 +35,31 @@
           | .
       .row(ng-hide="teamspeak.loaded"): .col-xs-12
         p Loading...
+  .panel(ng-class="boolClass(steam.online, 'panel')")
+    .panel-heading: h2.panel-title
+      span.fa.fa-server &nbsp;
+      span Steam
+      button.btn.pull-right(ng-class="boolClass(steam.online, 'btn')", ng-click="refresh('steam')", ng-disabled="!steam.loaded")
+        span.fa.fa-refresh(ng-class="{ 'fa-spin': !steam.loaded }")
+    .panel-body
+      .row(ng-show="steam.loaded && steam.online")
+        .col-sm-offset-3.col-sm-6
+          h3
+            span.fa.fa-users &nbsp;
+            | Users
+          ul.list-group
+            li.list-group-item(ng-repeat="user in steam.data.player_")
+              span.fa.fa-circle.online &nbsp;
+              | {{ user }}
+            li.list-group-item(ng-show="steam.data.player_.length === 0")
+              | No players currently on
+      .row(ng-show="steam.loaded && !steam.online"): .col-xs-12
+        p
+          | The Minecraft server is down (or sleeping). Let me know&nbsp;
+          a(href="https://ye-olde-chums.slack.com/messages/@adam.keenan/") here
+          | &nbsp;if it's actually down.
+      .row(ng-hide="steam.loaded"): .col-xs-12
+        p Loading...
   .panel(ng-class="boolClass(minecraft.online, 'panel')")
     .panel-heading: h2.panel-title
       span.fa.fa-server &nbsp;

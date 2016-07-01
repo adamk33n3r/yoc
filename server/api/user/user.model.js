@@ -18,6 +18,10 @@ var UserSchema = new Schema({
     type: String,
     default: 'user'
   },
+  steamID: {
+    type: String,
+    default: null
+  },
   facebook: {},
   settings: {
     notifications: {

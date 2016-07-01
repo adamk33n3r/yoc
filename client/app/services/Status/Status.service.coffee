@@ -68,6 +68,9 @@ angular.module 'yocApp'
       console.error "Couldn't connect to teamspeak server"
       console.error error
 
+  steam: ->
+    $http.get '/api/services/steam/status'
+
   minecraft: ($scope) ->
     $http.get '/api/services/minecraft/status'
     .success (result) ->
