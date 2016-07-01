@@ -7,11 +7,11 @@
 var errors = require('./components/errors');
 var path = require('path');
 
-module.exports = function(app) {
+module.exports = function(app, socketio) {
 
   // Insert routes below
   app.use('/api/settings', require('./api/settings'));
-  app.use('/api/services', require('./api/services'));
+  app.use('/api/services', require('./api/services')(socketio));
   app.use('/api/games', require('./api/game'));
   app.use('/api/fb', require('./api/fb'));
   app.use('/api/things', require('./api/thing'));

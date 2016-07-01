@@ -2,9 +2,16 @@
 
 angular.module 'yocApp'
 .controller 'StreamCtrl', ($scope) ->
-  console.log 'stream controller'
-  playerInstance = jwplayer 'jwPlayer'
-  playerInstance.setup
+  $scope.viewers = 0
+  $scope.socket.on 'stream:viewer++', ->
+    console.log 'new viewer'
+    $scope.viewers++
+  $scope.socket.on 'stream:viewer--', ->
+    console.log 'lost viewer'
+    $scope.viewers--
+
+  jwplayer 'jwPlayer'
+  .setup
     playlist: [
       title: 'Movienight'
       description: 'We watch movies together'

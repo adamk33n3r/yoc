@@ -3,7 +3,8 @@ var stream = require('./stream.controller')
 
 var router = express.Router();
 
-router.get('/', stream.status);
-router.post('/', stream.status);
-
-module.exports = router;
+module.exports = function (socketio) {
+  router.get('/', stream.status(socketio));
+  router.post('/', stream.status(socketio));
+  return router;
+};
