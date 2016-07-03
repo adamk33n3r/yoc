@@ -3,12 +3,9 @@
 angular.module 'yocApp'
 .controller 'StreamCtrl', ($scope) ->
   $scope.viewers = 0
-  $scope.socket.on 'stream:viewer++', ->
-    console.log 'new viewer'
-    $scope.viewers++
-  $scope.socket.on 'stream:viewer--', ->
-    console.log 'lost viewer'
-    $scope.viewers--
+  $scope.socket.on 'stream:viewerCount', (viewerCount) ->
+    console.log 'updated viewerCount', viewerCount
+    $scope.viewers = viewerCount
 
   jwplayer 'jwPlayer'
   .setup
