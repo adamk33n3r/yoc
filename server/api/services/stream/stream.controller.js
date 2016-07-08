@@ -10,8 +10,10 @@ exports.status = function (socketio) {
         text: (req.body.who? req.body.who : 'Someone') +  ' started streaming *' + (req.body.title ? req.body.title : 'something') + '*!\nCome join the party: https://yoc.adam-keenan.com/stream'
       });
     } else if (req.body.call === 'play') {
+      if (viewerCount < 0) viewerCount = 0;
       socketio.emit('stream:viewerCount', ++viewerCount);
     } else if (req.body.call === 'play_done') {
+      if (viewerCount < 1) viewerCount = 1;
       socketio.emit('stream:viewerCount', --viewerCount);
     }
     res.send();
