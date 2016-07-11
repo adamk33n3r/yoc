@@ -4,6 +4,7 @@
 
 'use strict';
 
+var request = require('request');
 var config = require('./environment');
 
 // When the user disconnects.. perform this
@@ -68,4 +69,21 @@ module.exports = function(socketio) {
       socketio.emit('chat:msg', msg);
     });
   });
+
+  // Update stream viewer count every 10 seconds
+  setInterval(function() {
+    request.get('http://eon.adam-keenan.net:8081/stats.json', function (error, response, body) {
+      if (error) {
+        return console.error(error);
+      }
+      var rtmpJson = JSON.parse(body).rtmp;
+      var streams = rtmpJson.servers[0][0].live.streams;
+      for (var i = 0; i < streams.length; i++) {
+        var stream = streams[i];
+        if (stream.name === 'movienight') {
+          socketio.emit('stream:viewerCount', stream.nclients - 1);
+        }
+      }
+    });
+  }, 10000);
 };

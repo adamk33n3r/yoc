@@ -7,20 +7,21 @@ angular.module 'yocApp'
     console.log 'updated viewerCount', viewerCount
     $scope.viewers = viewerCount
 
-  jwplayer 'jwPlayer'
-  .setup
+
+  settings =
     playlist: [
       title: 'Movienight'
       description: 'We watch movies together'
       file: 'rtmp://eon.adam-keenan.net/live/movienight'
     ,
-      title: 'Mike'
-      description: 'Mike plays gams'
-      file: 'rtmp://eon.adam-keenan.net/live/mike'
-    ,
+      image: '/assets/images/trove.jpg'
       title: 'TEST'
       description: 'Nothing to see here'
       file: 'rtmp://eon.adam-keenan.net/live/test'
+    ,
+      title: 'Mike'
+      description: 'Mike plays gams'
+      file: 'rtmp://eon.adam-keenan.net/live/mike'
     ]
     width: '100%'
     aspectratio: '16:9'
@@ -32,3 +33,8 @@ angular.module 'yocApp'
     logo:
       file: '/assets/images/yoc-100px-50a.png'
       hide: true
+
+  jwplayer 'jwPlayer'
+  .setup settings
+  .onError (e) ->
+    console.log 'onError', e
