@@ -78,11 +78,17 @@ module.exports = function(socketio) {
       }
       var rtmpJson = JSON.parse(body).rtmp;
       var streams = rtmpJson.servers[0][0].live.streams;
+      var foundStream = false;
       for (var i = 0; i < streams.length; i++) {
         var stream = streams[i];
         if (stream.name === 'movienight') {
           socketio.emit('stream:viewerCount', stream.nclients - 1);
+          foundStream = true;
+          break;
         }
+      }
+      if (!foundStream) {
+        socketio.emit('stream:viewerCount', 0);
       }
     });
   }, 10000);
