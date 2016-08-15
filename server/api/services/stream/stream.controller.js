@@ -5,6 +5,7 @@ exports.status = function (socketio) {
   return function (req, res) {
     if (req.body.name === 'movienight') {
       if (req.body.call === 'publish') {
+        var silent = req.body.silent;
         if (typeof silent === "undefined" || silent === null) {
           Slack.sendMessage(config.slack.webhook, {
             channel: '#random',
