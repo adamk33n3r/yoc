@@ -17,19 +17,18 @@ angular.module 'yocApp', [
   'config'
 ]
 .config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $facebookProvider) ->
-  $.get '/api/fb/get-token'
-  .then (facebook) ->
-    $facebookProvider.setAppId facebook.id
-    .setCustomInit
-      xfbml: true
-      version: 'v2.4'
-    $urlRouterProvider
-    .otherwise '/'
+  $facebookProvider.setAppId window.facebookId
+  .setPermissions 'email,user_birthday'
+  .setCustomInit
+    xfbml: true
+    version: 'v2.4'
+  $urlRouterProvider
+  .otherwise '/'
 
   $locationProvider.html5Mode true
   $httpProvider.interceptors.push 'authInterceptor'
 
-.controller 'MainController', ($rootScope, $facebook, version, User) ->
+.controller 'MainController', ($rootScope, $facebook, version, User, Modal) ->
   console.log "Booting app..."
   $rootScope.version = version
   $rootScope.facebookLoaded = false
@@ -38,14 +37,14 @@ angular.module 'yocApp', [
 
   onLogin = (response, firstTime = false) ->
     if response.status is 'connected'
-      $facebook.api '/me?fields=name,email'
+      $facebook.api '/me?fields=name,email,birthday'
       .then (data) ->
         $rootScope.user_id = data.id
         console.log "User id is #{data.id}"
         $rootScope.facebookLoaded = true
         $rootScope.$broadcast 'loggedin', data.id
         if firstTime
-          console.log "Creating new user"
+          console.log "Creating or updating user"
           newUser = new User
             name:
               full: data.name
@@ -54,7 +53,6 @@ angular.module 'yocApp', [
           newUser.$save()
             .catch (err) ->
               console.log err
-              #alert "Failed to create user. Contact admin."
     else
       alert "You must login with Facebook in order to use this app."
 
@@ -79,6 +77,12 @@ angular.module 'yocApp', [
     if $rootScope.status
       $facebook.cachedApi '/me'
       .then (user) ->
+        User.get fbId: user.id
+        .$promise.then (user) ->
+          unless user.facebook.birthday?
+            Modal.confirm.permissions ['Birthday']
+            .result.then (e) ->
+              $rootScope.fbLogin()
         $rootScope.user = user
 
 .factory 'authInterceptor', ($rootScope, $q, $cookieStore, $injector) ->

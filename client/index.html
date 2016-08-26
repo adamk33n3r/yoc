@@ -52,7 +52,7 @@
     <script src="/assets/jwplayer-7.4.3/jwplayer.js"></script>
     <script>jwplayer.key="5YkESdD6u5l8luORkA5ZUOdzUGDlzokaiidsaw==";</script>
   </head>
-  <body ng-app="yocApp" ng-controller="MainController">
+  <body ng-controller="MainController">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -129,5 +129,12 @@
           <script src="components/ui-router/ui-router.js"></script>
           <!-- endinjector -->
         <!-- endbuild -->
+  <script>
+    $.get('/api/fb/get-token')
+    .then(function (facebook) {
+      window.facebookId = facebook.id
+      angular.bootstrap(document, ['yocApp']);
+    });
+  </script>
 </body>
 </html>

@@ -77,11 +77,10 @@ exports.index = function(req, res) {
  * Creates a new user
  */
 exports.create = function(req, res, next) {
-  var newUser = new User(req.body);
-  newUser.provider = 'local';
-  newUser.role = 'user';
-  newUser.saveAsync()
-    .spread(function(user) {
+  req.body.provider = 'local';
+  req.body.role = 'user';
+  User.findOneAndUpdateAsync({ email: req.body.email }, req.body, { upsert: true })
+    .then(function(user) {
       var token = jwt.sign({ _id: user._id }, config.secrets.session, {
         expiresInMinutes: 60 * 5
       });
@@ -147,6 +146,20 @@ exports.changePassword = function(req, res, next) {
  * Get my info
  */
 exports.me = function(req, res, next) {
+  var fbId = req.query.fbId;
+  if (!fbId) {
+    return res.status(404).end();
+  }
+  User.findOneAsync({ 'facebook.id': fbId })
+  .then(function (user) {
+    if (!user) {
+      return res.status(404).end();
+    }
+    res.json(user);
+  });
+};
+
+exports.me2 = function(req, res, next) {
   var userId = req.user._id;
 
   User.findOneAsync({ _id: userId }, '-salt -hashedPassword')
