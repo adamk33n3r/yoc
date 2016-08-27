@@ -75,14 +75,18 @@ angular.module 'yocApp', [
   $rootScope.$on 'fb.auth.authResponseChange', (event, response, FB) ->
     $rootScope.status = $facebook.isConnected()
     if $rootScope.status
-      $facebook.cachedApi '/me'
+      $facebook.api '/me'
       .then (user) ->
-        User.get fbId: user.id
-        .$promise.then (user) ->
-          unless user.facebook.birthday?
-            Modal.confirm.permissions ['Birthday']
-            .result.then (e) ->
-              $rootScope.fbLogin()
+        unless $rootScope.askedForNewPermission
+          User.get fbId: user.id
+          .$promise.then (user) ->
+            unless user.facebook.birthday?
+              Modal.confirm.permissions ['Birthday']
+              .result.then (e) ->
+                $rootScope.askedForNewPermission = true
+                $facebook.login 'user_birthday', true
+                  .then (response) ->
+                    onLogin response, true
         $rootScope.user = user
 
 .factory 'authInterceptor', ($rootScope, $q, $cookieStore, $injector) ->
