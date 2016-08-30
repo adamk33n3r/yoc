@@ -7,7 +7,12 @@ var repl = require('repl').start({
 var models = [];
 
 var mongoose = require('mongoose-bird')();
-var config = require('./server/config/environment/development');
+var config;
+if(process.env.NODE_ENV === 'production') {
+    config = require('./server/config/environment/production');
+} else {
+    config = require('./server/config/environment/development');
+}
 mongoose.connect(config.mongo.uri, { db: { safe: true } });
 repl.context['mongoose'] = mongoose;
 repl.context['Schema'] = mongoose.Schema;
