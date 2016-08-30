@@ -81,6 +81,8 @@ exports.create = function(req, res, next) {
   req.body.role = 'user';
   User.findOneAndUpdateAsync({ email: req.body.email }, req.body, { upsert: true })
     .then(function(user) {
+      user.name.full = req.body.name.full;
+      user.saveAsync();
       var token = jwt.sign({ _id: user._id }, config.secrets.session, {
         expiresInMinutes: 60 * 5
       });

@@ -11,7 +11,6 @@ angular.module 'yocApp'
 
   Settings.allUsernames.query()
   .$promise.then (usernames) ->
-    console.log usernames
     $scope.usernames = usernames
     $scope.teamspeakRefresh()
     $scope.minecraftRefresh()
