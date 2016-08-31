@@ -20,7 +20,7 @@ module.exports = function (scheduler) {
                 return;
                 Slack.sendMessage(config.slack.webhook, {
                   channel: '#announcements',
-                  text: 'Happy Birthday to ' + user.name.full + '!'
+                  text: 'Happy Birthday to ' + user.name.full + '! :beers:'
                 }, function (err, response, body) {
                   if (err) {
                     console.error(err);
