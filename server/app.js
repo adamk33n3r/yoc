@@ -38,6 +38,8 @@ require('./config/socketio')(socketio);
 require('./config/express')(app);
 require('./routes')(app, socketio);
 
+require('./components/jobs');
+
 // Start server
 function startServer() {
   server.listen(config.port, config.ip, function() {

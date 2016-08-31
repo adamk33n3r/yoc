@@ -82,6 +82,11 @@ exports.create = function(req, res, next) {
   User.findOneAndUpdateAsync({ email: req.body.email }, req.body, { upsert: true })
     .then(function(user) {
       user.name.full = req.body.name.full;
+      console.log(user.facebook);
+      if (user.facebook.birthday) {
+        user.facebook.birthday = new Date(user.facebook.birthday);
+      }
+      console.log(user.facebook);
       user.saveAsync();
       var token = jwt.sign({ _id: user._id }, config.secrets.session, {
         expiresInMinutes: 60 * 5
