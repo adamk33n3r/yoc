@@ -10,7 +10,7 @@ div.navbar.navbar-default.navbar-static-top(ng-controller='NavbarCtrl')
         img.logo-brand(src="/assets/images/yoc.png")
       a.navbar-brand(href='/') Ye Olde Chums
 
-    div#navbar-main.navbar-collapse.collapse(collapse='isCollapsed')
+    div#navbar-main.navbar-collapse.collapse(uib-collapse='isCollapsed')
       ul.nav.navbar-nav
         li(ng-if='!item.auth || (item.auth && isLoggedIn())', ng-repeat='item in menu', ui-sref-active='active', ng-click='collapse()')
           a(ui-sref='{{item.state}}') {{item.title}}
