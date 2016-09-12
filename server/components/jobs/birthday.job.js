@@ -17,7 +17,6 @@ module.exports = function (scheduler) {
             });
             console.log(birthdayBoys);
             birthdayBoys.forEach(function (user) {
-                return;
                 Slack.sendMessage(config.slack.webhook, {
                   channel: '#announcements',
                   text: 'Happy Birthday to ' + user.name.full + '! :beers:'
