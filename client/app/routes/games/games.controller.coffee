@@ -5,7 +5,10 @@ angular.module 'yocApp'
   $scope.rocketleague =
     loaded: false
     users: {}
-  uid = '76561197994505647'
+  uids = [
+    '76561198024475759',
+    '76561197994505647'
+  ]
   $scope.overwatch =
     highlight:
       title: ''
@@ -43,10 +46,13 @@ angular.module 'yocApp'
   $scope.log = (thing) ->
     console.log thing
 
-  Stats.rocketleague(uid)
-  .then (stats) ->
+  promises = uids.map (uid) ->
+    Stats.rocketleague(uid)
+    .then (stats) ->
+      $scope.rocketleague.users[uid] = stats
+  Promise.all promises
+  .then () ->
     $scope.rocketleague.loaded = true
-    $scope.rocketleague.users[uid] = stats
 
   loadOverwatch = ->
     $scope.overwatch.loaded = false

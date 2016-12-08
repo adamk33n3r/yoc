@@ -17,4 +17,14 @@ Slack.sendMessage = function(url, payload, callback) {
   }, callback);
 };
 
+Slack.invite = function(token, email, callback) {
+  request.post({
+    url: 'https://ye-olde-chums.slack.com/api/users.admin.invite',
+    form: {
+      token: token,
+      email: email
+    }
+  }, callback);
+};
+
 module.exports = Slack;

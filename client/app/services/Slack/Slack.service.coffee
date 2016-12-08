@@ -7,3 +7,7 @@ angular.module 'yocApp'
     $http.post '/api/services/slack/send',
       channel: channel
       text: message
+  sendInvite: (email) ->
+    console.log "Sending invite to #{email}"
+    $http.post '/api/services/slack/invite',
+      email: email

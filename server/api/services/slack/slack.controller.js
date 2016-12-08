@@ -122,3 +122,19 @@ exports.lenny = checkToken('HEiSGKnFX8aGHXezPxnER2Mg', function (req, res) {
         text: ' '
     });
 });
+
+exports.invite = function (req, res) {
+  Slack.invite(config.slack.token, req.body.email, function (err, response, body) {
+    if (err) {
+      console.error(err);
+      res.status(500).send(err);
+    } else {
+      if (response.statusCode === 500) {
+        console.error(body);
+        res.status(500).send(err);
+      } else {
+        res.json({ success: true, body: body });
+      }
+    }
+  });
+};

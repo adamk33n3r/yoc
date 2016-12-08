@@ -16,6 +16,8 @@
     "grunt-cli": "^1.2.0",
     "grunt-ng-constant": "^1.1.0",
     "grunt-node-inspector": "^0.4.2",
+    "imagemin-optipng": "^5.2.1",
+    "imagemin-pngquant": "^5.0.0",
     "jade": "~1.2.0",
     "jsonwebtoken": "^5.0.0",
     "lodash": "~2.4.1",

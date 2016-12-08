@@ -58,7 +58,8 @@ var all = {
   // Slack
   slack: {
     webhook: requiredProcessEnv('WEBHOOK_URL'),
-    clinkToken: requiredProcessEnv('CLINK_TOKEN')
+    clinkToken: requiredProcessEnv('CLINK_TOKEN'),
+    token: requiredProcessEnv('SLACK_TOKEN')
   },
 
   // Teamspeak

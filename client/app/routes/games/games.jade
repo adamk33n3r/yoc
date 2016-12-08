@@ -2,9 +2,29 @@
   .panel.panel-default
     .panel-heading: h2.panel-title
       span.fa.fa-gamepad &nbsp;
+      span Rocket League
+      button.btn.btn-default.pull-right(ng-click="refresh('rocketleague')", ng-disabled="!rocketleague.loaded")
+        span.fa.fa-refresh(ng-class="{ 'fa-spin': !rocketleague.loaded }")
+    .panel-body
+      .row(ng-show="rocketleague.loaded"): .col-xs-12
+        .row: .col-xs-12
+          h1 Stats
+          ul.list-unstyled
+            li(ng-repeat="(user, stats) in rocketleague.users")
+              .row: .col-xs-12: h2 {{ stats.name }}
+              .row
+                .col-sm-6
+                    ul.list-group
+                      li.list-group-item(ng-repeat="(name, stat) in stats.stats")
+                        span {{ name }}:
+                        span.pull-right {{ stat }}
+                .col-sm-6: img.img-thumbnail.full-width(ng-src="https://signature.rocketleaguestats.com/normal/steam/{{ user }}.png")
+  .panel.panel-default
+    .panel-heading: h2.panel-title
+      span.fa.fa-gamepad &nbsp;
       span.overwatch-font-oblique Overwatch Highlights
       button.btn.btn-default.pull-right(ng-click="refresh('overwatch')", ng-disabled="!overwatch.loaded")
-        span.fa.fa-refresh(ng-class="{ 'fa-spin': !rocketleague.loaded }")
+        span.fa.fa-refresh(ng-class="{ 'fa-spin': !overwatch.loaded }")
     .panel-body
       .row
         .col-xs-offset-1.col-xs-10
@@ -39,29 +59,3 @@
                 button.btn.btn-primary.pull-right(type="button", ng-click="addHighlight(overwatch.highlight)", ng-disabled="addingHighlight || highlightForm.$invalid")
                   span.fa.fa-plus
                   | Add Highlight
-  .panel.panel-default
-    .panel-heading: h2.panel-title
-      span.fa.fa-gamepad &nbsp;
-      span Rocket League
-      button.btn.btn-default.pull-right(ng-click="refresh('rocketleague')", ng-disabled="!rocketleague.loaded || true")
-        span.fa.fa-refresh(ng-class="{ 'fa-spin': !rocketleague.loaded }")
-    .panel-body
-      .row(ng-show="rocketleague.loaded")
-        .col-sm-offset-1.col-sm-10
-          ul.list-unstyled
-            li(ng-repeat="(user, stats) in rocketleague.users")
-              .well
-                .row
-                  .col-sm-6
-                    h2 {{ stats.name }}
-                    h3 Duel
-                    h3 Doubles
-                    h3 Solo Standard
-                    h3 Standard
-                  .col-sm-6
-                    ul.list-group
-                      li.list-group-item(ng-repeat="(name, stat) in stats.stats")
-                        span {{ name }}:
-                        span.pull-right {{ stat }}
-                .row
-                  .col-sm-12: img.img-thumbnail.full-width(ng-src="https://signature.rocketleaguestats.com/normal/steam/{{ user }}.png")

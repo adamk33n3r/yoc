@@ -6,6 +6,13 @@ header#banner.hero-unit
 br
 .container
   .row: .col-xs-12(style="text-align: center")
+    h2 Join the Slack team!
+    .row
+      .col-sm-offset-3.col-sm-6
+        .input-group(ng-hide="sentInvite")
+          input.form-control(ng-model="email", placeholder="Enter your email...")
+          span.input-group-btn: button.btn.btn-primary(ng-click="sendInvite()") Send Invite
+        .alert.alert-success(ng-show="sentInvite") Invitation sent!
     h2 Hey! Do you want to be #[strong cool]?
     h4 Here are pictures that you can use to brandish your affiliation on all of the online communities.
     .row
