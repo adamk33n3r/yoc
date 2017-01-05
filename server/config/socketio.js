@@ -81,7 +81,7 @@ module.exports = function(socketio) {
       var foundStream = false;
       for (var i = 0; i < streams.length; i++) {
         var stream = streams[i];
-        if (stream.name === 'movienight') {
+        if (stream.name === 'default') {
           socketio.emit('stream:viewerCount', stream.nclients - 1);
           foundStream = true;
           break;
