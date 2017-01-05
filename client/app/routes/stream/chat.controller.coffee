@@ -1,7 +1,40 @@
 'use strict'
 
 angular.module 'yocApp'
-.controller 'ChatCtrl', ($scope, $localStorage) ->
+.controller 'ChatCtrl', ($scope, $localStorage, $window) ->
+  intervalID = 0
+  unreadMessages = 0
+
+  # Figure out which variable and event to use
+  if $window.document.hidden?
+    hiddenAttr = 'hidden'
+    visChangeEvent = 'visibilitychange'
+  else if $window.document.msHidden?
+    hiddenAttr = 'msHidden'
+    visChangeEvent = 'msvisibilitychange'
+  else if $window.document.webkitHidden?
+    hiddenAttr = 'webkitHidden'
+    visChangeEvent = 'webkitvisibilitychange'
+
+  # If the tab is hidden
+  isTabbedAway = () -> $window.document[hiddenAttr]
+
+  # Save the current title
+  title = $window.document.title
+  updateTitle = () ->
+    # If there are unread messages, show them in the title. Else reset it
+    if unreadMessages > 0
+      $window.document.title = "(#{unreadMessages}) #{title}"
+    else
+      $window.document.title = title
+
+  # Clear unread messages and remove from title if tab is switched to
+  $window.document.addEventListener visChangeEvent, () ->
+    unless isTabbedAway()
+      unreadMessages = 0
+      clearInterval intervalID
+      updateTitle()
+
   $scope.$storage = $localStorage.$default
     messages: []
 
@@ -16,12 +49,28 @@ angular.module 'yocApp'
     for link in links or []
       message.text = message.text.replace link, "<a target=\"_blank\" href=\"#{link}\">#{link}</a>"
     $scope.$storage.messages.unshift message
+
+    # If tab is hidden update title
+    if isTabbedAway()
+      unreadMessages++
+
+      first = true
+      clearInterval intervalID if intervalID is 0
+      intervalID = setInterval () ->
+        if first
+          updateTitle()
+        else
+          $window.document.title = "#{message.user} sent a message!"
+        first = not first
+      , 1000
+
   $scope.socket.on 'chat:connect', (user) ->
     console.log user, 'connected'
     $scope.$storage.messages.unshift
       user: 'YOC'
       text: "#{user} connected"
       timestamp: Date.now()
+
   $scope.socket.on 'chat:disconnect', (user) ->
     console.log user, 'disconnected'
     if user?
@@ -45,6 +94,3 @@ angular.module 'yocApp'
       timestamp: Date.now()
     $scope.text = ''
     evnt.preventDefault()
-
-  $scope.timeout = () ->
-    console.log 'timeout called'
