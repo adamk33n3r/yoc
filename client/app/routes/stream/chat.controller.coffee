@@ -5,6 +5,10 @@ angular.module 'yocApp'
   intervalID = 0
   unreadMessages = 0
 
+  # Ask for notification permissions
+  if Notification.permission isnt 'denied' or Notification.permission isnt 'granted'
+    Notification.requestPermission()
+
   # Figure out which variable and event to use
   if $window.document.hidden?
     hiddenAttr = 'hidden'
@@ -50,8 +54,9 @@ angular.module 'yocApp'
       message.text = message.text.replace link, "<a target=\"_blank\" href=\"#{link}\">#{link}</a>"
     $scope.$storage.messages.unshift message
 
-    # If tab is hidden update title
+    # If tab is hidden
     if isTabbedAway()
+      # Update title
       unreadMessages++
 
       first = true
@@ -63,6 +68,16 @@ angular.module 'yocApp'
           $window.document.title = "#{message.user} sent a message!"
         first = not first
       , 1000
+
+      # Create notification
+      notification = new Notification "New message from #{message.user}",
+        body: message.text
+        icon: '/assets/images/yoc.png'
+        tag: 'chat:message'
+      notification.onclick = (ev) ->
+        notification.close()
+        window.focus()
+      setTimeout notification.close.bind(notification), 3000
 
   $scope.socket.on 'chat:connect', (user) ->
     console.log user, 'connected'
