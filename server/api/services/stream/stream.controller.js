@@ -3,7 +3,7 @@ var config = require('../../../config/environment');
 
 exports.status = function (socketio) {
   return function (req, res) {
-    if (req.body.name === 'movienight') {
+    if (req.body.name === 'default') {
       if (req.body.call === 'publish') {
         var silent = req.body.silent;
         var channel = req.body.channel;

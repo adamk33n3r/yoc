@@ -10,6 +10,10 @@ angular.module 'yocApp'
 
   settings =
     playlist: [
+      title: 'Default'
+      description: 'Stream stuff, mane'
+      file: 'rtmp://eon.adam-keenan.net/live/default'
+    ,
       title: 'Movienight'
       description: 'We watch movies together'
       file: 'rtmp://eon.adam-keenan.net/live/movienight'
