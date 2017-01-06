@@ -37,6 +37,7 @@ angular.module 'yocApp'
     unless isTabbedAway()
       unreadMessages = 0
       clearInterval intervalID
+      intervalID = 0
       updateTitle()
 
   $scope.$storage = $localStorage.$default
@@ -60,7 +61,7 @@ angular.module 'yocApp'
       unreadMessages++
 
       first = true
-      clearInterval intervalID if intervalID is 0
+      clearInterval intervalID if intervalID isnt 0
       intervalID = setInterval () ->
         if first
           updateTitle()
