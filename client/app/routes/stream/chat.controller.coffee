@@ -4,6 +4,7 @@ angular.module 'yocApp'
 .controller 'ChatCtrl', ($scope, $localStorage, $window) ->
   intervalID = 0
   unreadMessages = 0
+  currentPlaylist = null
 
   # Ask for notification permissions
   if Notification.permission isnt 'denied' or Notification.permission isnt 'granted'
@@ -41,19 +42,31 @@ angular.module 'yocApp'
       updateTitle()
 
   $scope.$storage = $localStorage.$default
-    messages: []
+    playlist: {}
 
-  now = Date.now()
-  $scope.$storage.messages = $scope.$storage.messages.filter (message) ->
-    return (now - message.timestamp) < (24 * 60 * 60 * 1000)
+  # Setup guest name
   guestNumber = Math.floor(Math.random() * 10000)
   user = 'Guest#' + guestNumber
 
+  # Switch to other chat channel when switching playlist
+  $scope.$on 'playlist', (e, playlistName) ->
+    $scope.$apply () ->
+      currentPlaylist = playlistName
+      unless $scope.$storage[currentPlaylist]?
+        $scope.$storage[currentPlaylist] = []
+
+      # Get rid of messages that are over a day old
+      now = Date.now()
+      $scope.$storage[currentPlaylist] = $scope.$storage[currentPlaylist].filter (message) ->
+        return (now - message.timestamp) < (24 * 60 * 60 * 1000)
+
   $scope.socket.on 'chat:msg', (message) ->
+    console.log message
+    return if message.playlist isnt currentPlaylist
     links = message.text.match /https?:\/\/\S+/ig
     for link in links or []
       message.text = message.text.replace link, "<a target=\"_blank\" href=\"#{link}\">#{link}</a>"
-    $scope.$storage.messages.unshift message
+    $scope.getMessages().unshift message
 
     # If tab is hidden
     if isTabbedAway()
@@ -82,7 +95,7 @@ angular.module 'yocApp'
 
   $scope.socket.on 'chat:connect', (user) ->
     console.log user, 'connected'
-    $scope.$storage.messages.unshift
+    $scope.getMessages().unshift
       user: 'YOC'
       text: "#{user} connected"
       timestamp: Date.now()
@@ -90,7 +103,7 @@ angular.module 'yocApp'
   $scope.socket.on 'chat:disconnect', (user) ->
     console.log user, 'disconnected'
     if user?
-      $scope.$storage.messages.unshift
+      $scope.getMessages().unshift
         user: 'YOC'
         text: "#{user} disconnected"
         timestamp: Date.now()
@@ -107,6 +120,10 @@ angular.module 'yocApp'
     $scope.socket.emit 'chat:msg',
       user: user
       text: $scope.text
+      playlist: currentPlaylist
       timestamp: Date.now()
     $scope.text = ''
     evnt.preventDefault()
+
+  $scope.getMessages = () ->
+    return $scope.$storage[currentPlaylist]

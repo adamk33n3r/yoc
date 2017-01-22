@@ -40,5 +40,7 @@ angular.module 'yocApp'
 
   jwplayer 'jwPlayer'
   .setup settings
+  .on 'playlistItem', (playlist) ->
+    $scope.$parent.$broadcast 'playlist', playlist.item.title
   .onError (e) ->
     console.log 'onError', e
